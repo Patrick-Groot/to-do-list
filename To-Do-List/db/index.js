@@ -1,4 +1,19 @@
-// ℹ️ package responsible to make the connection with mongodb
+const mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
+const dbUrl = "mongodb://localhost/user";
+const connect = async () => {
+  mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+  const db = mongoose.connection;
+  db.on("error", () => {
+    console.log("could not connect");
+  });
+  db.once("open", () => {
+    console.log("> Successfully connected to database");
+  });
+};
+module.exports = { connect };
+
+/* // ℹ️ package responsible to make the connection with mongodb
 // https://www.npmjs.com/package/mongoose
 const mongoose = require("mongoose");
 
@@ -17,3 +32,4 @@ mongoose
   .catch((err) => {
     console.error("Error connecting to mongo: ", err);
   });
+ */
