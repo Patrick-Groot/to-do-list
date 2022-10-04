@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const passport = require("passport");
 
 router.get("/signup", (req, res, next) => {
   try {
