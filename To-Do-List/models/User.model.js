@@ -1,20 +1,44 @@
-const { Schema, model } = require("mongoose");
+// https://www.makeuseof.com/user-authentication-in-nodejs/
 
-// TODO: Please make sure you edit the user model to whatever makes sense in this case
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const { Schema } = mongoose;
+
 const userSchema = new Schema(
   {
     username: {
       type: String,
-      // unique: true -> Ideally, should be unique, but its up to you
+      unique: true,
     },
-    password: String,
+    password: {
+      type: String,
+      required: true,
+    },
+    lists: [{ type: Schema.Types.ObjectId, ref: 'List' }],
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`
+    // this second object adds extra properties: `createdAt` and `updatedAt` // ?
     timestamps: true,
   }
 );
 
-const User = model("User", userSchema);
+userSchema.pre('save', async function (next) {
+  try {
+    // check method of registration
+    const user = this;
+    if (!user.isModified('password')) next();
+    // generate salt
+    const salt = await bcrypt.genSalt(10);
+    // hash the password
+    const hashedPassword = await bcrypt.hash(this.password, salt);
+    // replace plain text password with hashed password
+    this.password = hashedPassword;
+    next();
+  } catch (error) {
+    return next(error);
+  }
+});
+
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
