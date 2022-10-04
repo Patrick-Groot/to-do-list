@@ -19,7 +19,8 @@ const app = express();
 require("./config")(app);
 
 // Import jsonwebtoken
-const jsonwebtoken = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
 // default value for title local
 const capitalized = require("./utils/capitalized");
