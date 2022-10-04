@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const MONGO_URI = process.env.MONGODB_URI || "mongodb://localhost/To-Do-List";
 
 mongoose
-  .connect(MONGO_URI)
+  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((x) => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
@@ -17,3 +17,20 @@ mongoose
   .catch((err) => {
     console.error("Error connecting to mongo: ", err);
   });
+
+  
+//From: https://www.makeuseof.com/user-authentication-in-nodejs/
+/* const mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
+const dbUrl = "mongodb://localhost/To-Do-List";
+const connect = async () => {
+  mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+  const db = mongoose.connection;
+  db.on("error", () => {
+    console.log("could not connect");
+  });
+  db.once("open", () => {
+    console.log("> Successfully connected to database");
+  });
+};
+module.exports = { connect }; */
