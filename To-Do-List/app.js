@@ -1,52 +1,47 @@
 // ℹ️ Gets access to environment variables/settings
 // https://www.npmjs.com/package/dotenv
-require("dotenv/config");
+require('dotenv/config');
 
 // ℹ️ Connects to the database
-require("./db");
+require('./db');
 
 // Handles http requests (express is node js framework)
 // https://www.npmjs.com/package/express
-const express = require("express");
+const express = require('express');
+
+const passport = require('passport');
 
 // Handles the handlebars
 // https://www.npmjs.com/package/hbs
-const hbs = require("hbs");
+const hbs = require('hbs');
 
 const app = express();
 
-// ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
-require("./config")(app);
+// use session here:
+require('./config/session.config')(app);
 
-// Import jsonwebtoken
-const jwt = require("jsonwebtoken");
-const passport = require("passport");
+// ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
+require('./config')(app);
 
 // default value for title local
-const capitalized = require("./utils/capitalized");
-const projectName = "To-Do-List";
+const capitalized = require('./utils/capitalized');
+const projectName = 'To-Do-List';
 
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
 // 👇 Start handling routes here
-const index = require("./routes/index.routes");
-app.use("/", index);
+const index = require('./routes/index.routes');
+app.use('/', index);
 
-const loginRouter = require("./routes/auth/login.routes");
-app.use("/", loginRouter);
+const authRouter = require('./routes/auth/auth.routes');
+app.use('/', authRouter);
 
-const signupRouter = require("./routes/auth/signup.routes");
-app.use("/", signupRouter);
+const protectedRouter = require('./routes/protected.routes');
+app.use('/', protectedRouter);
 
-const protectedRouter = require("./routes/protected.routes");
-app.use("/", protectedRouter);
-
-app.post(
-  "/login",
-  passport.authenticate("local-login", { session: false }),
-  (req, res, next) => {
-    // login
-    /* jwt.sign(
+app.post('/login', passport.authenticate('local-login', { session: false }), (req, res, next) => {
+  // login
+  /* jwt.sign(
       { user: req.user },
       "secretKey",
       { expiresIn: "1h" },
@@ -57,25 +52,20 @@ app.post(
             token: null,
           });
         } */
-    res.json({
-      user: req.user,
-    });
-  }
-);
+  res.json({
+    user: req.user,
+  });
+});
 
-app.post(
-  "/signup",
-  passport.authenticate("local-signup", { session: false }),
-  (req, res, next) => {
-    // sign up
-    res.json({
-      user: req.user,
-    });
-  }
-);
+app.post('/signup', passport.authenticate('local-signup', { session: false }), (req, res, next) => {
+  // sign up
+  res.json({
+    user: req.user,
+  });
+});
 
 app.get(
-  "/protected",
+  '/protected',
   /* passport.authenticate("jwt", { session: false }), */
   (req, res, next) => {
     res.json({ user: req.user });
@@ -83,6 +73,6 @@ app.get(
 );
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
-require("./error-handling")(app);
+require('./error-handling')(app);
 
 module.exports = app;
