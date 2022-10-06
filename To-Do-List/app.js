@@ -39,7 +39,7 @@ const signupRouter = require("./routes/auth/signup.routes");
 app.use("/", signupRouter);
 
 app.post(
-  "/auth/login",
+  "/login",
   passport.authenticate("local-login", { session: false }),
   (req, res, next) => {
     // login
@@ -63,7 +63,7 @@ app.post(
 );
 
 app.post(
-  "/auth/signup",
+  "/signup",
   passport.authenticate("local-signup", { session: false }),
   (req, res, next) => {
     // sign up
