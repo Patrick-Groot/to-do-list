@@ -38,12 +38,15 @@ app.use("/", loginRouter);
 const signupRouter = require("./routes/auth/signup.routes");
 app.use("/", signupRouter);
 
+const protectedRouter = require("./routes/protected.routes");
+app.use("/", protectedRouter);
+
 app.post(
   "/login",
   passport.authenticate("local-login", { session: false }),
   (req, res, next) => {
     // login
-    jwt.sign(
+    /* jwt.sign(
       { user: req.user },
       "secretKey",
       { expiresIn: "1h" },
@@ -53,12 +56,10 @@ app.post(
             message: "Failed to login",
             token: null,
           });
-        }
-        res.json({
-          token,
-        });
-      }
-    );
+        } */
+    res.json({
+      user: req.user,
+    });
   }
 );
 
@@ -75,7 +76,7 @@ app.post(
 
 app.get(
   "/protected",
-  passport.authenticate("jwt", { session: false }),
+  /* passport.authenticate("jwt", { session: false }), */
   (req, res, next) => {
     res.json({ user: req.user });
   }

@@ -52,7 +52,7 @@ module.exports = (passport) => {
       }
     )
   );
-  passport.use(
+  /* passport.use(
     new JwtStrategy(
       {
         jwtFromRequest: ExtractJwt.fromHeader("authorization"),
@@ -68,5 +68,5 @@ module.exports = (passport) => {
         }
       }
     )
-  );
+  ); */
 };

@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 router.get("/protected", (req, res, next) => {
   try {
-    res.render("auth/protected");
+    res.render("protected");
   } catch (err) {
     console.error(err);
   }
