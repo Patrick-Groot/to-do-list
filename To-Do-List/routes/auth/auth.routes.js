@@ -11,25 +11,73 @@ const router = require('express').Router();
 
 const saltRounds = 10;
 
-passport.use(
-  new LocalStrategy(function verify(username, password, cb) {
-    User.findOne({ username: username }).then((existingUser) => {
-      if (!existingUser) {
-        console.log('No user with this username');
-        return res.render('auth/login', {
-          error: 'No user with this username found. Please try again or sign-up first',
-        });
-      }
-      const correctPassword = bcryptjs.compare(password, existingUser.password);
+// This is not working...
+// passport.use(
+//   new LocalStrategy(function verify(username, password, cb) {
+//     User.findOne({ username }).then((user) => {
+//       if (!user) {
+//         console.log('No user with this username');
+//         return res.render('auth/login', {
+//           errorMessage: 'No user with this username found. Please try again or sign-up first.',
+//         });
+//       } else if (bcryptjs.compareSync(password, user.passwordHash)) {
+//         res.redirect('/userProfile');
+//         if (!correctPassword) {
+//           console.log("Username and password don't match");
+//           return res.render('auth/login', {
+//             errorMessage: "Username and password don't match. Please try again or sign-up first.",
+//           });
+//         }
+//       }
+//     });
+//   })
+// );
 
-      if (!correctPassword) {
-        console.log("Username and password don't match");
-        return res.render('auth/login', {
-          error: "Username and password don't match. Please try again or sign-up first",
+// Trying to make this callback-nonsense work here...
+// passport.use(
+
+//   new LocalStrategy(function verify(username, password, cb) {
+
+//     User.findOne({ username }).then((user) => {
+
+//         if (err) { return cb(err); }
+
+//         if (!user) { return cb(null, false, { errorMessage: 'Incorrect username or password.' })
+//       } else if (bcryptjs.compareSync(password, user.passwordHash)) {
+//       if (err) { return cb(err); }
+//         if (!correctPassword) {
+//           console.log("Username and password don't match");
+//           return cb(null, false, { errorMessage: 'Incorrect username or password.' });
+//         }
+//         return cb(null, user);
+//       }
+// ##################################################
+// https://github.com/howardmann/authentication
+passport.use(
+  'local-login',
+  new LocalStrategy(
+    {
+      // Fields to accept
+      usernameField: 'username', // default is username, override to accept email
+      passwordField: 'password',
+      passReqToCallback: true, // allows us to access req in the call back
+    },
+    async (req, username, password, done) => {
+      // Check if user and password is valid
+      let user = await User.findOne({ username });
+      let passwordValid = user && bcryptjs.compareSync(password, user.passwordHash);
+
+      // If password valid call done and serialize user.id to req.user property
+      if (passwordValid) {
+        console.log('Logged in');
+        return done(null, {
+          id: user.id,
         });
       }
-    });
-  })
+      // If invalid call done with false and flash message
+      return done(null, false);
+    }
+  )
 );
 
 passport.serializeUser(function (user, cb) {
@@ -44,17 +92,13 @@ passport.deserializeUser(function (user, cb) {
   });
 });
 
-router.get('/login', (req, res, next) => {
-  try {
-    res.render('auth/login');
-  } catch (err) {
-    console.error(err);
-  }
+router.get('/login', function (req, res, next) {
+  res.render('auth/login');
 });
 
 router.post(
   '/login',
-  passport.authenticate('local', {
+  passport.authenticate('local-login', {
     successReturnToOrRedirect: '/',
     failureRedirect: '/login',
     failureMessage: true,
