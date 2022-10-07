@@ -11,6 +11,9 @@ const router = require('express').Router();
 
 const saltRounds = 10;
 
+// require auth middleware
+const { isLoggedIn, isLoggedOut } = require('../../middleware/route-guard.js');
+
 // This is not working...
 // passport.use(
 //   new LocalStrategy(function verify(username, password, cb) {
@@ -67,11 +70,14 @@ passport.use(
       let user = await User.findOne({ username });
       let passwordValid = user && bcryptjs.compareSync(password, user.passwordHash);
 
+      console.log(user);
+
       // If password valid call done and serialize user.id to req.user property
       if (passwordValid) {
         console.log('Logged in');
         return done(null, {
           id: user.id,
+          name: user.username,
         });
       }
       // If invalid call done with false and flash message
@@ -82,31 +88,42 @@ passport.use(
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
+    console.log('serializeUser: ', user); // Trying to see if/how sessions are working here...
     cb(null, { id: user.id, username: user.username });
   });
 });
 
 passport.deserializeUser(function (user, cb) {
   process.nextTick(function () {
+    console.log('deserializeUser: ', user); // Trying to see if/how sessions are working here...
     return cb(null, user);
   });
 });
 
-router.get('/login', function (req, res, next) {
+router.get('/login', isLoggedOut, function (req, res, next) {
   res.render('auth/login');
 });
 
 router.post(
   '/login',
   passport.authenticate('local-login', {
-    successReturnToOrRedirect: '/',
+    successReturnToOrRedirect: '/dashboard',
     failureRedirect: '/login',
     failureMessage: true,
   })
 );
 
-router.post('/logout', function (req, res, next) {
+router.get('/dashboard', isLoggedIn, function (req, res, next) {
+  console.log(req); //Here I stopped :)
+  res.render('dashboard');
+});
+
+// Not logging out yet... Or maybe it does ;D
+// It does log out!
+router.post('/logout', isLoggedIn, function (req, res, next) {
+  console.log(req.isAuthenticated()); // Yeah! isAuthenticated() is a function available that gives back true or false -> middleware!
   req.logout(function (err) {
+    console.log(req.isAuthenticated());
     if (err) {
       return next(err);
     }
@@ -114,7 +131,7 @@ router.post('/logout', function (req, res, next) {
   });
 });
 
-router.get('/signup', (req, res, next) => {
+router.get('/signup', isLoggedOut, (req, res, next) => {
   try {
     res.render('auth/signup');
   } catch (err) {
@@ -125,6 +142,7 @@ router.get('/signup', (req, res, next) => {
 router.post('/signup', async (req, res, next) => {
   const { username, password } = req.body;
   console.log(username, password);
+
   if (!username || !password) {
     res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email and password.' });
     return;
@@ -143,7 +161,7 @@ router.post('/signup', async (req, res, next) => {
     const hashedPassword = await bcryptjs.hash(password, salt);
     const createdUser = await User.create({ username, passwordHash: hashedPassword });
     console.log('new user:', createdUser);
-    res.redirect('protected');
+    res.redirect('/dashboard');
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
       res.status(500).render('auth/signup', { errorMessage: error.message });
@@ -157,34 +175,37 @@ router.post('/signup', async (req, res, next) => {
   }
 });
 
-// router.post("/login", async (req, res, next) => {
-//   console.log(req.body);
-//   try {
-//     const existingUser = await User.findOne({ username: req.body.username });
-//     if (!existingUser) {
-//       console.log("No user with this username");
-//       return res.render("auth/login", {
-//         error:
-//           "No user with this username found. Please try again or sign-up first",
+// Signup von passport/Github
+
+/* POST /signup
+ *
+ * This route creates a new user account.
+ *
+ * A desired username and password are submitted to this route via an HTML form,
+ * which was rendered by the `GET /signup` route.  The password is hashed and
+ * then a new user record is inserted into the database.  If the record is
+ * successfully created, the user is logged in.
+ */
+// router.post('/signup', function(req, res, next) {
+//   var salt = crypto.randomBytes(16);
+//   crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', function(err, hashedPassword) {
+//     if (err) { return next(err); }
+//     db.run('INSERT INTO users (username, hashed_password, salt) VALUES (?, ?, ?)', [
+//       req.body.username,
+//       hashedPassword,
+//       salt
+//     ], function(err) {
+//       if (err) { return next(err); }
+//       var user = {
+//         id: this.lastID,
+//         username: req.body.username
+//       };
+//       req.login(user, function(err) {
+//         if (err) { return next(err); }
+//         res.redirect('/');
 //       });
-//     }
-//     const correctPassword = await bcryptjs.compare(
-//       req.body.password,
-//       existingUser.password
-//     );
-//     if (!correctPassword) {
-//       console.log("Username and password don't match");
-//       return res.render("auth/login", {
-//         error:
-//           "Username and password don't match. Please try again or sign-up first",
-//       });
-//     }
-//     console.log("Match!");
-//     req.session.currentUser = { username: existingUser.username };
-//     res.redirect("/protected");
-//   } catch (err) {
-//     console.error(err);
-//   }
+//     });
+//   });
 // });
 
 module.exports = router;
