@@ -114,16 +114,14 @@ router.post(
 );
 
 router.get('/dashboard', isLoggedIn, function (req, res, next) {
-  console.log(req); //Here I stopped :)
-  res.render('dashboard');
+  console.log(req.user); //Here I stopped :)
+  res.render('dashboard', {});
 });
 
 // Not logging out yet... Or maybe it does ;D
 // It does log out!
 router.post('/logout', isLoggedIn, function (req, res, next) {
-  console.log(req.isAuthenticated()); // Yeah! isAuthenticated() is a function available that gives back true or false -> middleware!
   req.logout(function (err) {
-    console.log(req.isAuthenticated());
     if (err) {
       return next(err);
     }
@@ -186,26 +184,28 @@ router.post('/signup', async (req, res, next) => {
  * then a new user record is inserted into the database.  If the record is
  * successfully created, the user is logged in.
  */
-// router.post('/signup', function(req, res, next) {
-//   var salt = crypto.randomBytes(16);
-//   crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', function(err, hashedPassword) {
-//     if (err) { return next(err); }
-//     db.run('INSERT INTO users (username, hashed_password, salt) VALUES (?, ?, ?)', [
-//       req.body.username,
-//       hashedPassword,
-//       salt
-//     ], function(err) {
-//       if (err) { return next(err); }
-//       var user = {
-//         id: this.lastID,
-//         username: req.body.username
-//       };
-//       req.login(user, function(err) {
-//         if (err) { return next(err); }
-//         res.redirect('/');
-//       });
-//     });
-//   });
-// });
+router.post('/signup', function (req, res, next) {
+  var salt = crypto.randomBytes(16);
+  crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', function (err, hashedPassword) {
+    if (err) {
+      return next(err);
+    }
+    db.run('INSERT INTO users (username, hashed_password, salt) VALUES (?, ?, ?)', [req.body.username, hashedPassword, salt], function (err) {
+      if (err) {
+        return next(err);
+      }
+      var user = {
+        id: this.lastID,
+        username: req.body.username,
+      };
+      req.login(user, function (err) {
+        if (err) {
+          return next(err);
+        }
+        res.redirect('/');
+      });
+    });
+  });
+});
 
 module.exports = router;
