@@ -33,4 +33,12 @@ router.post('/:id/newitem', async (req, res, next) => {
   res.render('myList', { list: foundList });
 });
 
+router.post("/:listId/:itemId/delete", async (req, res, next) => {  
+    const listWithItemToDelete = await List.findByIdAndUpdate(req.params.listId, { $pull: { items: req.params.itemId }});
+    console.log(listWithItemToDelete);
+    const itemToDelete = await Item.findByIdAndDelete(req.params.itemId);
+    await listWithItemToDelete.populate('items');
+    res.render('myList', { list: listWithItemToDelete });
+});
+
 module.exports = router;
