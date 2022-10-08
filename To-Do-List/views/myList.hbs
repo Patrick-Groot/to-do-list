@@ -1,0 +1,21 @@
+{{#with list}}
+  <h2>List name {{name}}</h2>
+  <p>List Items</p>
+
+  <ol>
+    {{#each items}}
+      <li>
+        {{this.name}}
+      </li>
+    {{/each}}
+  </ol>
+
+  <form class='w-50 mt-2' action='/{{this.id}}/newitem' method='POST'>
+    <div class='mb-4'>
+      <label for='itemName' class='form-label text-secondary'>Name of the item</label>
+      <input type='text' name='itemName' class='form-control' required />
+    </div>
+    <button type='submit' class='btn btn-secondary'>Create new item</button>
+  </form>
+
+{{/with}}

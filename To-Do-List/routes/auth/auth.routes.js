@@ -88,14 +88,14 @@ passport.use(
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    console.log('serializeUser: ', user); // Trying to see if/how sessions are working here...
+    // console.log('serializeUser: ', user); // Trying to see if/how sessions are working here...
     cb(null, { id: user.id, username: user.username });
   });
 });
 
 passport.deserializeUser(function (user, cb) {
   process.nextTick(function () {
-    console.log('deserializeUser: ', user); // Trying to see if/how sessions are working here...
+    // console.log('deserializeUser: ', user); // Trying to see if/how sessions are working here...
     return cb(null, user);
   });
 });
@@ -113,12 +113,13 @@ router.post(
   })
 );
 
-router.get('/dashboard', isLoggedIn, async function (req, res, next) {  
+router.get('/dashboard', isLoggedIn, async function (req, res, next) {
   const foundUser = await User.findById(req.user.id);
-  console.log("Found User Name: ", foundUser.username);
+  console.log('Found User Name: ', foundUser.username);
   // const { username } = foundUser.username;
- // console.log({ username })
-    res.render('dashboard', {foundUser});
+  // console.log({ username })
+  await foundUser.populate('lists');
+  res.render('dashboard', { foundUser });
 });
 
 // Not logging out yet... Or maybe it does ;D
@@ -142,7 +143,7 @@ router.get('/signup', isLoggedOut, (req, res, next) => {
 
 router.post('/signup', async (req, res, next) => {
   const { username, password } = req.body;
-  console.log(username, password);
+  // console.log(username, password);
 
   if (!username || !password) {
     res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email and password.' });
