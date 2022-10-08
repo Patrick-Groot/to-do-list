@@ -39,6 +39,9 @@ app.use('/', authRouter);
 const protectedRouter = require('./routes/protected.routes');
 app.use('/', protectedRouter);
 
+const listRouter = require('./routes/list/list.routes');
+app.use('/', listRouter);
+
 app.post('/login', passport.authenticate('local-login', { session: false }), (req, res, next) => {
   // login
   /* jwt.sign(

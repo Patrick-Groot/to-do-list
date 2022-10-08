@@ -1,9 +1,17 @@
-<div class='d-flex w-100 h-75 justify-content-center align-items-center'>
-  <div class='card text-bg-secondary mb-3' style='max-width: 18rem;'>
-    <div class='card-header'>Dashboard</div>
-    <div class='card-body'>
-      <h5 class='card-title'>user.id: {{user.id}}</h5>
-      <p class='card-text'>Trying to display some userdate here...</p>
+<div class="d-flex w-100 h-75 justify-content-center align-items-center">
+  <div class="card text-bg-secondary mb-3" style="max-width: 18rem;">
+    <div class="card-header">Dashboard</div>
+    <div class="card-body">
+      <h5 class="card-title">Welcome {{foundUser.username}}!</h5>
+      <p class="card-text">Trying to display some userdate here...
+      </p>
     </div>
   </div>
+  <form class="w-50 mt-2" action="/newlist" method="POST">
+    <div class="mb-4">
+      <label for="listName" class="form-label text-secondary">Name of the list</label>
+      <input type="text" name="listName" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-secondary">Create new list</button>
+  </form>    
 </div>

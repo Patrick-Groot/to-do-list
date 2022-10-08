@@ -113,9 +113,12 @@ router.post(
   })
 );
 
-router.get('/dashboard', isLoggedIn, function (req, res, next) {
-  console.log(req.user); //Here I stopped :)
-  res.render('dashboard', {});
+router.get('/dashboard', isLoggedIn, async function (req, res, next) {  
+  const foundUser = await User.findById(req.user.id);
+  console.log("Found User Name: ", foundUser.username);
+  // const { username } = foundUser.username;
+ // console.log({ username })
+    res.render('dashboard', {foundUser});
 });
 
 // Not logging out yet... Or maybe it does ;D
