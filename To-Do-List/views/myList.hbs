@@ -1,27 +1,46 @@
-  <h2>List name {{list.name}}</h2>
-  <p>List Items {{list.id}}</p>
+<h2>List name {{list.name}}</h2>
+<p>List id {{list.id}}</p>
 
-  <ol>
-    {{#each list.items}}
-      <li>
-        {{name}}
-        <form class='w-50 mt-2' action='/{{../list.id}}/{{id}}/delete' method='POST'>    
-          <button type='submit' class='btn btn-secondary'>X</button>
-        </form>
-        <button id="editItem">Edit</button>
-        <form class='w-50 mt-2' class="hidden" id="editForm" action='/{{../list.id}}/{{id}}/edit' method='POST'>  
-          <span>Edit Name:</span>
-          <input type="text" name="name" value="{{name}}" >  
-          <button type='submit' class='btn btn-secondary'>Save changes</button>
-        </form>
-      </li>
-    {{/each}}
-  </ol>
+<table class='table table-hover w-50'>
+  {{#each list.items}}
+    <tr>
+      <td> <h4>{{name}}</h4> </td>
 
-  <form class='w-50 mt-2' action='/{{list.id}}/newitem' method='POST'>
-    <div class='mb-4'>
-      <label for='itemName' class='form-label text-secondary'>Create new item</label>
-      <input type='text' name='itemName' class='form-control' required />
-    </div>
-    <button type='submit' class='btn btn-secondary'>Save new item</button>
-  </form>
+      <td>
+        <div class='btn-group'>
+          <button type='button' class='btn btn-secondary btn-sm dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='false' data-bs-auto-close='outside'>
+            Edit
+          </button>
+
+          <form class='row dropdown-menu' id='editForm' action='/{{../list.id}}/{{id}}/edit' method='POST'>
+            <div class='col-md-auto'>
+              <label for='name'>Edit Name:</label>
+            </div>
+            <div class='col-md-auto'>
+              <input type='text' name='name' value='{{name}}' required />
+            </div>
+            <div class='col-md-auto'>
+              <button type='submit' class='btn btn-secondary btn-sm'>Save changes</button>
+            </div>
+          </form>
+
+        </div>
+        <div class='col-md-auto'>
+          <td>
+            <form class='mt-2' action='/{{../list.id}}/{{id}}/delete' method='POST'>
+              <button class='mb-2 ms-2' type='submit'><i class='bi bi-x-circle-fill text-danger'></i></button>
+            </form>
+          </td>
+        </div>
+      </td>
+    </tr>
+  {{/each}}
+</table>
+
+<form class='w-25 mt-2' action='/{{list.id}}/newitem' method='POST'>
+  <div class='mb-4'>
+    <label for='itemName' class='form-label text-secondary'>Create new item</label>
+    <input type='text' name='itemName' class='form-control' required />
+  </div>
+  <button type='submit' class='btn btn-secondary'>Save new item</button>
+</form>
