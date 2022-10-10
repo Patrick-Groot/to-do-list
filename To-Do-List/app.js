@@ -15,6 +15,17 @@ const passport = require('passport');
 // https://www.npmjs.com/package/hbs
 const hbs = require('hbs');
 
+// Returns 10/10/22
+hbs.registerHelper('toLocaleString', function (number) {
+  const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
+  return number.toLocaleString('en-us', options);
+});
+
+// Returns 2022-10-10
+// hbs.registerHelper('toLocaleString', function (number) {
+//   return number.toISOString().split('T')[0];
+// });
+
 const app = express();
 
 // use session here:
@@ -42,38 +53,38 @@ app.use('/', protectedRouter);
 const listRouter = require('./routes/list/list.routes');
 app.use('/', listRouter);
 
-app.post('/login', passport.authenticate('local-login', { session: false }), (req, res, next) => {
-  // login
-  /* jwt.sign(
-      { user: req.user },
-      "secretKey",
-      { expiresIn: "1h" },
-      (err, token) => {
-        if (err) {
-          return res.json({
-            message: "Failed to login",
-            token: null,
-          });
-        } */
-  res.json({
-    user: req.user,
-  });
-});
+// app.post('/login', passport.authenticate('local-login', { session: false }), (req, res, next) => {
+//   // login
+//   /* jwt.sign(
+//       { user: req.user },
+//       "secretKey",
+//       { expiresIn: "1h" },
+//       (err, token) => {
+//         if (err) {
+//           return res.json({
+//             message: "Failed to login",
+//             token: null,
+//           });
+//         } */
+//   res.json({
+//     user: req.user,
+//   });
+// });
 
-app.post('/signup', passport.authenticate('local-signup', { session: false }), (req, res, next) => {
-  // sign up
-  res.json({
-    user: req.user,
-  });
-});
+// app.post('/signup', passport.authenticate('local-signup', { session: false }), (req, res, next) => {
+//   // sign up
+//   res.json({
+//     user: req.user,
+//   });
+// });
 
-app.get(
-  '/protected',
-  /* passport.authenticate("jwt", { session: false }), */
-  (req, res, next) => {
-    res.json({ user: req.user });
-  }
-);
+// app.get(
+//   '/protected',
+//   /* passport.authenticate("jwt", { session: false }), */
+//   (req, res, next) => {
+//     res.json({ user: req.user });
+//   }
+// );
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require('./error-handling')(app);

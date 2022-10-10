@@ -14,46 +14,6 @@ const saltRounds = 10;
 // require auth middleware
 const { isLoggedIn, isLoggedOut } = require('../../middleware/route-guard.js');
 
-// This is not working...
-// passport.use(
-//   new LocalStrategy(function verify(username, password, cb) {
-//     User.findOne({ username }).then((user) => {
-//       if (!user) {
-//         console.log('No user with this username');
-//         return res.render('auth/login', {
-//           errorMessage: 'No user with this username found. Please try again or sign-up first.',
-//         });
-//       } else if (bcryptjs.compareSync(password, user.passwordHash)) {
-//         res.redirect('/userProfile');
-//         if (!correctPassword) {
-//           console.log("Username and password don't match");
-//           return res.render('auth/login', {
-//             errorMessage: "Username and password don't match. Please try again or sign-up first.",
-//           });
-//         }
-//       }
-//     });
-//   })
-// );
-
-// Trying to make this callback-nonsense work here...
-// passport.use(
-
-//   new LocalStrategy(function verify(username, password, cb) {
-
-//     User.findOne({ username }).then((user) => {
-
-//         if (err) { return cb(err); }
-
-//         if (!user) { return cb(null, false, { errorMessage: 'Incorrect username or password.' })
-//       } else if (bcryptjs.compareSync(password, user.passwordHash)) {
-//       if (err) { return cb(err); }
-//         if (!correctPassword) {
-//           console.log("Username and password don't match");
-//           return cb(null, false, { errorMessage: 'Incorrect username or password.' });
-//         }
-//         return cb(null, user);
-//       }
 // ##################################################
 // https://github.com/howardmann/authentication
 passport.use(
@@ -88,7 +48,6 @@ passport.use(
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    // console.log('serializeUser: ', user); // Trying to see if/how sessions are working here...
     cb(null, { id: user.id, username: user.username });
   });
 });
@@ -116,14 +75,11 @@ router.post(
 router.get('/dashboard', isLoggedIn, async function (req, res, next) {
   const foundUser = await User.findById(req.user.id);
   console.log('Found User Name: ', foundUser.username);
-  // const { username } = foundUser.username;
-  // console.log({ username })
+
   await foundUser.populate('lists');
   res.render('dashboard', { foundUser });
 });
 
-// Not logging out yet... Or maybe it does ;D
-// It does log out!
 router.post('/logout', isLoggedIn, function (req, res, next) {
   req.logout(function (err) {
     if (err) {

@@ -17,7 +17,9 @@
               <button type='submit' class='btn btn-sm btn-outline-secondary'>{{this.name}}</button>
             </form>
           </td>
-
+          <td>
+            <p class='text-muted'>{{toLocaleString this.createdAt}}</p>
+          </td>
           <td>
             <div class='btn-group'>
               <button
@@ -35,7 +37,7 @@
                   <label for='name'>Edit Name:</label>
                 </div>
                 <div class='col-md-auto'>
-                  <input type='text' name='name' value='{{this.name}}' class='form-control' required />
+                  <input type='text' name='name' value='{{this.name}}' class='form-control form-control-sm mb-1' required />
                 </div>
                 <div class='col-md-auto'>
                   <button type='submit' class='btn btn-secondary btn-sm'>Save changes</button>
