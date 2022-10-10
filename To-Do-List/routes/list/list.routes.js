@@ -70,10 +70,12 @@ router.post("/:listId/edit", async (req, res, next) => {
 router.post("/:listId/delete", async (req, res, next) => {
   console.log(req.user)
   const foundListToDelete = await List.findById(req.params.listId);  
-  const deleteItemsOfList = foundListToDelete.items.forEach (async elem => {
-    console.log(elem);
-    await Item.findByIdAndDelete(elem);
-  });
+  if (foundListToDelete.items) {
+    foundListToDelete.items.forEach (async elem => {
+      console.log(elem);
+      await Item.findByIdAndDelete(elem);
+    });
+  };  
   const listToDelete = await List.findByIdAndDelete(req.params.listId);  
   const foundUser = await User.findById(req.user.id);
   await foundUser.populate("lists");
