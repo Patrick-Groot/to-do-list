@@ -12,8 +12,16 @@
     <h2>Lists of {{username}}</h2>
     <ul>
       {{#each lists}}
-        <form class='nav-item ms-5' id='logout-form' action='/{{this.id}}' method='POST'>
+        <form class='nav-item ms-5' action='/{{this.id}}' method='POST'>
           <button type='submit' class='nav-link'>{{this.name}}</button>
+        </form>
+        <form class='w-50 mt-2' action='/{{this.id}}/delete' method='POST'>    
+          <button type='submit' class='btn btn-secondary'>X</button>
+        </form>
+        <form class='w-50 mt-2' action='/{{this.id}}/edit' method='POST'>  
+          <span>Edit Name:</span>
+          <input type="text" name="name" value="{{this.name}}" >  
+          <button type='submit' class='btn btn-secondary'>Save changes</button>
         </form>
       {{/each}}
     </ul>
@@ -21,9 +29,9 @@
 
   <form class='w-50 mt-2' action='/newlist' method='POST'>
     <div class='mb-4'>
-      <label for='listName' class='form-label text-secondary'>Name of the list</label>
+      <label for='listName' class='form-label text-secondary'>Create new List</label>
       <input type='text' name='listName' class='form-control' required />
     </div>
-    <button type='submit' class='btn btn-secondary'>Create new list</button>
+    <button type='submit' class='btn btn-secondary'>Save new list</button>
   </form>
 </div>

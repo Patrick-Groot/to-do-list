@@ -5,3 +5,9 @@ document.addEventListener(
   },
   false
 );
+
+const editButton = document.getElementById("editItem");
+const editForm = document.getElementById("editForm");
+editButton.addEventListener("click", () => {
+  editForm.classList.toggle("hidden");
+});

@@ -6,16 +6,22 @@
       <li>
         {{name}}
         <form class='w-50 mt-2' action='/{{../list.id}}/{{id}}/delete' method='POST'>    
-    <button type='submit' class='btn btn-secondary'>X</button>
-  </form>        
+          <button type='submit' class='btn btn-secondary'>X</button>
+        </form>
+        <button id="editItem">Edit</button>
+        <form class='w-50 mt-2' class="hidden" id="editForm" action='/{{../list.id}}/{{id}}/edit' method='POST'>  
+          <span>Edit Name:</span>
+          <input type="text" name="name" value="{{name}}" >  
+          <button type='submit' class='btn btn-secondary'>Save changes</button>
+        </form>
       </li>
     {{/each}}
   </ol>
 
   <form class='w-50 mt-2' action='/{{list.id}}/newitem' method='POST'>
     <div class='mb-4'>
-      <label for='itemName' class='form-label text-secondary'>Name of the item</label>
+      <label for='itemName' class='form-label text-secondary'>Create new item</label>
       <input type='text' name='itemName' class='form-control' required />
     </div>
-    <button type='submit' class='btn btn-secondary'>Create new item</button>
+    <button type='submit' class='btn btn-secondary'>Save new item</button>
   </form>
