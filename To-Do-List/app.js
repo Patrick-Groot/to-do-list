@@ -53,39 +53,6 @@ app.use('/', protectedRouter);
 const listRouter = require('./routes/list/list.routes');
 app.use('/', listRouter);
 
-// app.post('/login', passport.authenticate('local-login', { session: false }), (req, res, next) => {
-//   // login
-//   /* jwt.sign(
-//       { user: req.user },
-//       "secretKey",
-//       { expiresIn: "1h" },
-//       (err, token) => {
-//         if (err) {
-//           return res.json({
-//             message: "Failed to login",
-//             token: null,
-//           });
-//         } */
-//   res.json({
-//     user: req.user,
-//   });
-// });
-
-// app.post('/signup', passport.authenticate('local-signup', { session: false }), (req, res, next) => {
-//   // sign up
-//   res.json({
-//     user: req.user,
-//   });
-// });
-
-// app.get(
-//   '/protected',
-//   /* passport.authenticate("jwt", { session: false }), */
-//   (req, res, next) => {
-//     res.json({ user: req.user });
-//   }
-// );
-
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require('./error-handling')(app);
 

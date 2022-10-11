@@ -4,11 +4,8 @@ const User = require('../../models/User.model');
 const Item = require('../../models/Item.model');
 
 router.post('/newlist', async (req, res, next) => {
-  //console.log(req.body.listName);
   const newList = await List.create({ name: req.body.listName });
   console.log('New list: ', newList);
-  //console.log(req.user.id);
-  //const listId = await List.findOne();
   const foundUser = await User.findByIdAndUpdate(
     req.user.id,
     {
@@ -17,9 +14,6 @@ router.post('/newlist', async (req, res, next) => {
     { new: true }
   );
   res.redirect('/dashboard');
-  // await foundUser.populate('lists');
-  // console.log(foundUser);
-  // res.render('dashboard', { foundUser });
 });
 
 router.post('/:listId/delete', async (req, res, next) => {
@@ -33,18 +27,26 @@ router.post('/:listId/delete', async (req, res, next) => {
   }
   const listToDelete = await List.findByIdAndDelete(req.params.listId);
   res.redirect('/dashboard');
-  // const foundUser = await User.findById(req.user.id);
-  // await foundUser.populate('lists');
-  // res.render('dashboard', { foundUser });
 });
 
+// JS "Window location" to hide params
+// req.session.whatever = data + redirect
 // TODO: fix url
 router.post('/:id', async (req, res, next) => {
   const list = await List.findById(req.params.id);
   await list.populate('items');
-  console.log(list);
-  res.render('myList', { list });
+  req.session.list = list;
+  console.log('POST SESSION----------->', req.session);
+  res.redirect('/list');
+  // res.render('myList', { list });
 });
+
+router.get('/list', async (req, res, next) => {
+  console.log('GET SESSION----------->', req.session);
+  res.render('myList', { list: req.session.list });
+});
+
+// ####
 
 router.post('/:id/newitem', async (req, res, next) => {
   const newItem = await Item.create({ name: req.body.itemName });
@@ -59,7 +61,8 @@ router.post('/:id/newitem', async (req, res, next) => {
   );
   await foundList.populate('items');
   console.log(foundList);
-  res.render('myList', { list: foundList });
+  req.session.list = foundList;
+  res.redirect('/list');
 });
 
 router.post('/:listId/:itemId/delete', async (req, res, next) => {
