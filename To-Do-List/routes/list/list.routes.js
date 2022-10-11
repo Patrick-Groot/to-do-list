@@ -16,9 +16,26 @@ router.post('/newlist', async (req, res, next) => {
     },
     { new: true }
   );
-  await foundUser.populate('lists');
-  console.log(foundUser);
-  res.render('dashboard', { foundUser });
+  res.redirect('/dashboard');
+  // await foundUser.populate('lists');
+  // console.log(foundUser);
+  // res.render('dashboard', { foundUser });
+});
+
+router.post('/:listId/delete', async (req, res, next) => {
+  console.log(req.user);
+  const foundListToDelete = await List.findById(req.params.listId);
+  if (foundListToDelete.items) {
+    foundListToDelete.items.forEach(async (elem) => {
+      console.log(elem);
+      await Item.findByIdAndDelete(elem);
+    });
+  }
+  const listToDelete = await List.findByIdAndDelete(req.params.listId);
+  res.redirect('/dashboard');
+  // const foundUser = await User.findById(req.user.id);
+  // await foundUser.populate('lists');
+  // res.render('dashboard', { foundUser });
 });
 
 // TODO: fix url
@@ -82,21 +99,6 @@ router.post('/:listId/edit', async (req, res, next) => {
   );
   console.log('List to edit: ', listToEdit);
   console.log('Req Body: ', req.body);
-  const foundUser = await User.findById(req.user.id);
-  await foundUser.populate('lists');
-  res.render('dashboard', { foundUser });
-});
-
-router.post('/:listId/delete', async (req, res, next) => {
-  console.log(req.user);
-  const foundListToDelete = await List.findById(req.params.listId);
-  if (foundListToDelete.items) {
-    foundListToDelete.items.forEach(async (elem) => {
-      console.log(elem);
-      await Item.findByIdAndDelete(elem);
-    });
-  }
-  const listToDelete = await List.findByIdAndDelete(req.params.listId);
   const foundUser = await User.findById(req.user.id);
   await foundUser.populate('lists');
   res.render('dashboard', { foundUser });
