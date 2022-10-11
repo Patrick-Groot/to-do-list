@@ -44,8 +44,16 @@ module.exports = (app) => {
   //   next();
   // });
 
+  // Make `user` and `authenticated` available in templates
+  
+
   app.use(passport.authenticate('session'));
 
   // Handles access to the favicon
   app.use(favicon(path.join(__dirname, '..', 'public', 'images', 'favicon.ico')));
+  app.use(function (req, res, next) {    
+    res.locals.user = req.user;
+    next();
+  })
 };
+

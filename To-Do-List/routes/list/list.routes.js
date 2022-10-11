@@ -76,7 +76,8 @@ router.post('/:listId/:itemId/delete', async (req, res, next) => {
   console.log(listWithItemToDelete);
   const itemToDelete = await Item.findByIdAndDelete(req.params.itemId);
   await listWithItemToDelete.populate('items');
-  res.render('myList', { list: listWithItemToDelete });
+  req.session.list = listWithItemToDelete;
+  res.redirect('/list');
 });
 
 router.post('/:listId/:itemId/edit', async (req, res, next) => {
@@ -89,7 +90,10 @@ router.post('/:listId/:itemId/edit', async (req, res, next) => {
     { new: true }
   );
   await listWithItemToEdit.populate('items');
-  res.render('myList', { list: listWithItemToEdit });
+  req.session.list = listWithItemToEdit;
+  console.log("itemID: ", req.params.itemId);
+  console.log("Req Ses List: ", req.session.list.items[0].id);
+  res.redirect('/list');
 });
 
 router.post('/:listId/edit', async (req, res, next) => {
@@ -100,11 +104,11 @@ router.post('/:listId/edit', async (req, res, next) => {
     },
     { new: true }
   );
-  console.log('List to edit: ', listToEdit);
+ /*  console.log('List to edit: ', listToEdit);
   console.log('Req Body: ', req.body);
   const foundUser = await User.findById(req.user.id);
-  await foundUser.populate('lists');
-  res.render('dashboard', { foundUser });
+  await foundUser.populate('lists'); */
+  res.redirect('/dashboard');
 });
 
 module.exports = router;

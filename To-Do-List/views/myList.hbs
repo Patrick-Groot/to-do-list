@@ -18,7 +18,7 @@
             Edit
           </button>
 
-          <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{id}}/edit' method='POST'>
+          <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
             <div class='col-md-auto'>
               <label for='name'>Edit Name:</label>
             </div>
@@ -33,7 +33,7 @@
         </div>
         <div class='col-md-auto'>
           <td>
-            <form class='mt-2' action='/{{../list._id}}/{{id}}/delete' method='POST'>
+            <form class='mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
               <button class='mb-2 ms-2' type='submit'><i class='bi bi-x-circle-fill text-danger'></i></button>
             </form>
           </td>
