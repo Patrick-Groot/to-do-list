@@ -49,7 +49,7 @@ router.get('/list', async (req, res, next) => {
 // ####
 
 router.post('/:id/newitem', async (req, res, next) => {
-  const newItem = await Item.create({ name: req.body.itemName });
+  const newItem = await Item.create({ name: req.body.itemName, deadline: req.body.itemDeadline });
   console.log('New item: ', newItem);
 
   const foundList = await List.findByIdAndUpdate(
@@ -86,6 +86,7 @@ router.post('/:listId/:itemId/edit', async (req, res, next) => {
     req.params.itemId,
     {
       name: req.body.name,
+      deadline: req.body.deadline,
     },
     { new: true }
   );

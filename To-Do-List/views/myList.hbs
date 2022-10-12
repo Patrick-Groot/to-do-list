@@ -5,7 +5,7 @@
   {{#each list.items}}
     <tr>
       <td> <h4>{{name}}</h4> </td>
-
+        <td><p>{{deadline}}</p></td>
       <td>
         <div class='btn-group'>
           <button
@@ -28,8 +28,16 @@
             <div class='col-md-auto'>
               <button type='submit' class='btn btn-secondary btn-sm'>Save changes</button>
             </div>
+            <div class='col-md-auto'>
+              <label for='name'>Edit Deadline:</label>
+            </div>
+            <div class='col-md-auto'>
+              <input type='date' name='deadline' value='{{deadline}}' class='form-control form-control-sm mb-1' required />
+            </div>
+            <div class='col-md-auto'>
+              <button type='submit' class='btn btn-secondary btn-sm'>Save changes</button>
+            </div>            
           </form>
-
         </div>
         <div class='col-md-auto'>
           <td>
@@ -47,6 +55,7 @@
   <div class='mb-4'>
     <label for='itemName' class='form-label text-secondary'>Create new item</label>
     <input type='text' name='itemName' class='form-control' required />
+    <input type="date" name="itemDeadline">
   </div>
   <button type='submit' class='btn btn-secondary'>Save new item</button>
 </form>
