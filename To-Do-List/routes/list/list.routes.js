@@ -42,16 +42,17 @@ router.post('/:id', async (req, res, next) => {
 });
 
 router.get('/list', async (req, res, next) => {
-  console.log('GET SESSION----------->', req.session);
-  res.render('myList', { list: req.session.list });
+  //console.log('GET SESSION----------->', req.session);
+  sortedList = JSON.parse(JSON.stringify(req.session.list));
+  sortedList.items.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+  //console.log(sortedList)
+  res.render('myList', { list: sortedList });
 });
 
-// ####
-
 router.post('/:id/newitem', async (req, res, next) => {
-  const newItem = await Item.create({ name: req.body.itemName, deadline: req.body.itemDeadline });
-  console.log('New item: ', newItem);
 
+  const newItem = await Item.create({ name: req.body.itemName, deadline: req.body.itemDeadline });
+  console.log("reqBodyitemDeadline: ", req.body.itemDeadline);
   const foundList = await List.findByIdAndUpdate(
     req.params.id,
     {

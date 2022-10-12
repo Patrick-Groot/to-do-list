@@ -6,7 +6,7 @@ const itemSchema = new Schema(
       type: String,
     },
     done: Boolean,
-    deadline: Date,
+    deadline: String,
   },
   {
     timestamps: true, // ?
