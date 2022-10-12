@@ -1,86 +1,59 @@
 // ℹ️ Gets access to environment variables/settings
 // https://www.npmjs.com/package/dotenv
-require("dotenv/config");
+require('dotenv/config');
 
 // ℹ️ Connects to the database
-require("./db");
+require('./db');
 
 // Handles http requests (express is node js framework)
 // https://www.npmjs.com/package/express
-const express = require("express");
+const express = require('express');
+
+const passport = require('passport');
 
 // Handles the handlebars
 // https://www.npmjs.com/package/hbs
-const hbs = require("hbs");
+const hbs = require('hbs');
+
+// Returns 10/10/22
+hbs.registerHelper('toLocaleString', function (number) {
+  const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
+  return number.toLocaleString('en-us', options);
+});
+
+// Returns 2022-10-10
+// hbs.registerHelper('toLocaleString', function (number) {
+//   return number.toISOString().split('T')[0];
+// });
 
 const app = express();
 
-// ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
-require("./config")(app);
+// use session here:
+require('./config/session.config')(app);
 
-// Import jsonwebtoken
-const jsonwebtoken = require("jsonwebtoken");
+// ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
+require('./config')(app);
 
 // default value for title local
-const capitalized = require("./utils/capitalized");
-const projectName = "To-Do-List";
+const capitalized = require('./utils/capitalized');
+const projectName = 'To-Do-List';
 
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
 // 👇 Start handling routes here
-const index = require("./routes/index.routes");
-app.use("/", index);
+const index = require('./routes/index.routes');
+app.use('/', index);
 
-const loginRouter = require("./routes/auth/login.routes");
-app.use("/", loginRouter);
+const authRouter = require('./routes/auth/auth.routes');
+app.use('/', authRouter);
 
-const signupRouter = require("./routes/auth/signup.routes");
-app.use("/", signupRouter);
+const protectedRouter = require('./routes/protected.routes');
+app.use('/', protectedRouter);
 
-app.post(
-  "/auth/login",
-  passport.authenticate("local-login", { session: false }),
-  (req, res, next) => {
-    // login
-    jwt.sign(
-      { user: req.user },
-      "secretKey",
-      { expiresIn: "1h" },
-      (err, token) => {
-        if (err) {
-          return res.json({
-            message: "Failed to login",
-            token: null,
-          });
-        }
-        res.json({
-          token,
-        });
-      }
-    );
-  }
-);
-
-app.post(
-  "/auth/signup",
-  passport.authenticate("local-signup", { session: false }),
-  (req, res, next) => {
-    // sign up
-    res.json({
-      user: req.user,
-    });
-  }
-);
-
-app.get(
-  "/protected",
-  passport.authenticate("jwt", { session: false }),
-  (req, res, next) => {
-    res.json({ user: req.user });
-  }
-);
+const listRouter = require('./routes/list/list.routes');
+app.use('/', listRouter);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
-require("./error-handling")(app);
+require('./error-handling')(app);
 
 module.exports = app;

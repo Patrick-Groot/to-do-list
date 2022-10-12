@@ -1,0 +1,69 @@
+<div class='w-100'>
+
+  <div class='card text-bg-secondary m-5' style='max-width: 20rem;'>
+    <div class='card-header'>Welcome {{foundUser.username}}!</div>
+    <div class='card-body'>
+      <p class='card-text'>Are you ready to do some things today?</p>
+    </div>
+  </div>
+
+  {{#with foundUser}}
+    <h2>Lists of {{username}}</h2>
+    <table class='table table-hover w-50'>
+      {{#each lists}}
+        <tr>
+          <td>
+            <form class='nav-item ms-5' action='/{{this.id}}' method='POST'>
+              {{! <input type="text" name! value! hidden> }}
+              <button type='submit' class='btn btn-sm btn-outline-secondary'>{{this.name}}</button>
+            </form>
+          </td>
+          <td>
+            <p class='text-muted'>{{toLocaleString this.createdAt}}</p>
+          </td>
+          <td>
+            <div class='btn-group'>
+              <button
+                type='button'
+                class='btn btn-secondary btn-sm dropdown-toggle'
+                data-bs-toggle='dropdown'
+                aria-expanded='false'
+                data-bs-auto-close='outside'
+              >
+                Edit
+              </button>
+
+              <form class='row dropdown-menu' id='editForm' action='/{{this.id}}/edit' method='POST'>
+                <div class='col-md-auto'>
+                  <label for='name'>Edit Name:</label>
+                </div>
+                <div class='col-md-auto'>
+                  <input type='text' name='name' value='{{this.name}}' class='form-control form-control-sm mb-1' required />
+                </div>
+                <div class='col-md-auto'>
+                  <button type='submit' class='btn btn-secondary btn-sm'>Save changes</button>
+                </div>
+              </form>
+
+            </div>
+            <div class='col-md-auto'>
+              <td>
+                <form class='w-50 mt-2' action='/{{this.id}}/delete' method='POST'>
+                  <button class='mb-2 ms-2' type='submit'><i class='bi bi-x-circle-fill text-danger'></i></button>
+                </form>
+              </td>
+            </div>
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+  {{/with}}
+
+  <form class='w-25 mt-2' action='/newlist' method='POST'>
+    <div class='mb-4'>
+      <label for='listName' class='form-label text-secondary'>Create new List</label>
+      <input type='text' name='listName' class='form-control' required />
+    </div>
+    <button type='submit' class='btn btn-secondary'>Save new list</button>
+  </form>
+</div>

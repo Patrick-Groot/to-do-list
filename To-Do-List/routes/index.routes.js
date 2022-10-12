@@ -4,7 +4,11 @@ const router = require('express').Router();
 router.get('/', (req, res, next) => {
   // res.render("index");
   // res.render('auth/login');
-  res.render('auth/signup');
+  console.log(req.session);
+  if (req.session) {
+    return res.redirect("/dashboard");
+  }
+  res.render('index');
 });
 
 module.exports = router;
