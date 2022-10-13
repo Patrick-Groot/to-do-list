@@ -2,6 +2,7 @@
   "name": "to-do-list",
   "version": "0.0.0",
   "private": true,
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon --ext js,mjs,json,hbs,css server.js"
