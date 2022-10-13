@@ -56,7 +56,15 @@
   {{/each}}
 </table>
 
-<table class='table table-hover w-50'>
+<div class="d-md-flex justify-content-md-end w-50">
+  <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    done
+  </button>
+</div>
+
+
+
+<table class='table table-hover w-50 collapse' id="collapseExample" >
   {{#each list.items}}
   {{#if done}}
   
