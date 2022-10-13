@@ -35,27 +35,23 @@
             <li class='nav-item'>
               <a class='nav-link active' aria-current='page' href='/'>Home</a>
             </li>
-            <li class='nav-item'>
+            {{! <li class='nav-item'>
               <a class='nav-link' href='/dashboard'>/dashboard</a>
-            </li>
+            </li> }}
           </ul>
-          {{! When sessions are working, let´s do something like "if (!loggedIn) display these" }}
-          {{!-- {{#if user}} --}}
           <ul class='navbar-nav'>
             {{#if user}}
-            <form class='nav-item ms-5' id='logout-form' action='/logout' method='POST'>
-              <button type='submit' class='nav-link'>Logout</button>
-            </form>
+              <form class='nav-item ms-5' id='logout-form' action='/logout' method='POST'>
+                <button type='submit' class='nav-link'>Logout</button>
+              </form>
             {{else}}
-            <li class='nav-item'>
-              <a class='nav-link' href='/signup'>Sign up</a>
-            </li>
-            <li class='nav-item'>
-              <a class='nav-link' href='/login'>Login</a>
-            </li>
+              <li class='nav-item'>
+                <a class='nav-link' href='/signup'>Sign up</a>
+              </li>
+              <li class='nav-item'>
+                <a class='nav-link' href='/login'>Login</a>
+              </li>
             {{/if}}
-            {{! And if (loggedIn) display Logout  }}
-            
           </ul>
         </div>
       </div>
