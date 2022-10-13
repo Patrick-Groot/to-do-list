@@ -25,6 +25,8 @@ passport.use(
       passReqToCallback: true, // allows us to access req in the call back
     },
     async (req, username, password, done) => {
+      username = req.sanitize(username);
+      password = req.sanitize(password);
       // Check if user and password is valid
       let user = await User.findOne({ username });
       let passwordValid = user && bcryptjs.compareSync(password, user.passwordHash);
@@ -80,7 +82,8 @@ router.get('/signup', isLoggedOut, (req, res, next) => {
 });
 
 router.post('/signup', async (req, res, next) => {
-  const { username, password } = req.body;
+  const username = req.sanitize(req.body.username);
+  const password = req.sanitize(req.body.password);
 
   if (!username || !password) {
     res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email and password.' });

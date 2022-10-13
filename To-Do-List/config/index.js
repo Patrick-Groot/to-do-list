@@ -1,6 +1,9 @@
 // We reuse this import in order to have access to the `body` property in requests
 const express = require('express');
 
+// Sanatizing input
+const expressSanitizer = require('express-sanitizer');
+
 const passport = require('passport');
 
 // ℹ️ Responsible for the messages you see in the terminal as requests are coming in
@@ -26,6 +29,9 @@ module.exports = (app) => {
 
   // To have access to `body` property in the request
   app.use(express.json());
+
+  app.use(expressSanitizer());
+
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
 
