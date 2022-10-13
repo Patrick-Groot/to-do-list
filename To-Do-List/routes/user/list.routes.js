@@ -3,6 +3,7 @@ const List = require('../../models/List.model');
 const User = require('../../models/User.model');
 const Item = require('../../models/Item.model');
 
+// POST New list
 router.post('/newlist', async (req, res, next) => {
   const newList = await List.create({ name: req.body.listName });
   console.log('New list: ', newList);
@@ -16,6 +17,7 @@ router.post('/newlist', async (req, res, next) => {
   res.redirect('/dashboard');
 });
 
+// Post delete list
 router.post('/:listId/delete', async (req, res, next) => {
   console.log(req.user);
   const foundListToDelete = await List.findById(req.params.listId);
@@ -29,9 +31,11 @@ router.post('/:listId/delete', async (req, res, next) => {
   res.redirect('/dashboard');
 });
 
+// Notes from Rico, maybe still useful
 // JS "Window location" to hide params
 // req.session.whatever = data + redirect
-// TODO: fix url
+
+// POST got to list
 router.post('/:id', async (req, res, next) => {
   const list = await List.findById(req.params.id);
   await list.populate('items');
@@ -40,14 +44,16 @@ router.post('/:id', async (req, res, next) => {
   res.redirect('/list');
 });
 
+// GET go to list
 router.get('/list', async (req, res, next) => {
   //console.log('GET SESSION----------->', req.session);
   sortedList = JSON.parse(JSON.stringify(req.session.list));
   sortedList.items.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
   //console.log(sortedList)
-  res.render('myList', { list: sortedList });
+  res.render('user/myList', { list: sortedList });
 });
 
+// POST new list item
 router.post('/:id/newitem', async (req, res, next) => {
   const newItem = await Item.create({ name: req.body.itemName, deadline: req.body.itemDeadline });
   console.log('reqBodyitemDeadline: ', req.body.itemDeadline);
@@ -64,6 +70,7 @@ router.post('/:id/newitem', async (req, res, next) => {
   res.redirect('/list');
 });
 
+// POST delete list item
 router.post('/:listId/:itemId/delete', async (req, res, next) => {
   const listWithItemToDelete = await List.findByIdAndUpdate(
     req.params.listId,
@@ -79,6 +86,7 @@ router.post('/:listId/:itemId/delete', async (req, res, next) => {
   res.redirect('/list');
 });
 
+// POST edit list item
 router.post('/:listId/:itemId/edit', async (req, res, next) => {
   const listWithItemToEdit = await List.findById(req.params.listId);
   const itemToUpdate = await Item.findByIdAndUpdate(
@@ -94,17 +102,6 @@ router.post('/:listId/:itemId/edit', async (req, res, next) => {
   console.log('itemID: ', req.params.itemId);
   console.log('Req Ses List: ', req.session.list.items[0].id);
   res.redirect('/list');
-});
-
-router.post('/:listId/edit', async (req, res, next) => {
-  const listToEdit = await List.findByIdAndUpdate(
-    req.params.listId,
-    {
-      name: req.body.name,
-    },
-    { new: true }
-  );
-  res.redirect('/dashboard');
 });
 
 module.exports = router;

@@ -13,6 +13,7 @@ const saltRounds = 10;
 // require auth middleware
 const { isLoggedIn, isLoggedOut } = require('../../middleware/route-guard.js');
 
+// Passport stuff - should live somewhere else...
 // https://github.com/howardmann/authentication
 passport.use(
   'local-login',
@@ -55,6 +56,7 @@ passport.deserializeUser(function (user, cb) {
   });
 });
 
+// Login Routes
 router.get('/login', isLoggedOut, function (req, res, next) {
   res.render('auth/login');
 });
@@ -68,23 +70,7 @@ router.post(
   })
 );
 
-router.get('/dashboard', isLoggedIn, async function (req, res, next) {
-  const foundUser = await User.findById(req.user.id);
-  console.log('Found User Name: ', foundUser.username);
-
-  await foundUser.populate('lists');
-  res.render('dashboard', { foundUser });
-});
-
-router.post('/logout', isLoggedIn, function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect('/');
-  });
-});
-
+// Signup Routes
 router.get('/signup', isLoggedOut, (req, res, next) => {
   try {
     res.render('auth/signup');
@@ -95,7 +81,6 @@ router.get('/signup', isLoggedOut, (req, res, next) => {
 
 router.post('/signup', async (req, res, next) => {
   const { username, password } = req.body;
-  // console.log(username, password);
 
   if (!username || !password) {
     res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email and password.' });
@@ -127,6 +112,16 @@ router.post('/signup', async (req, res, next) => {
       next(error);
     }
   }
+});
+
+// Logout Route
+router.post('/logout', isLoggedIn, function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/');
+  });
 });
 
 module.exports = router;
