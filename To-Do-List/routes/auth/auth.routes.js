@@ -1,20 +1,18 @@
 const User = require('../../models/User.model');
 
 const express = require('express');
+const router = require('express').Router();
 const mongoose = require('mongoose');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
 const bcryptjs = require('bcryptjs');
-const router = require('express').Router();
-
 const saltRounds = 10;
 
 // require auth middleware
 const { isLoggedIn, isLoggedOut } = require('../../middleware/route-guard.js');
 
-// ##################################################
 // https://github.com/howardmann/authentication
 passport.use(
   'local-login',
@@ -40,7 +38,6 @@ passport.use(
           name: user.username,
         });
       }
-      // If invalid call done with false and flash message
       return done(null, false);
     }
   )
@@ -54,7 +51,6 @@ passport.serializeUser(function (user, cb) {
 
 passport.deserializeUser(function (user, cb) {
   process.nextTick(function () {
-    // console.log('deserializeUser: ', user); // Trying to see if/how sessions are working here...
     return cb(null, user);
   });
 });
@@ -131,41 +127,6 @@ router.post('/signup', async (req, res, next) => {
       next(error);
     }
   }
-});
-
-// Signup von passport/Github
-
-/* POST /signup
- *
- * This route creates a new user account.
- *
- * A desired username and password are submitted to this route via an HTML form,
- * which was rendered by the `GET /signup` route.  The password is hashed and
- * then a new user record is inserted into the database.  If the record is
- * successfully created, the user is logged in.
- */
-router.post('/signup', function (req, res, next) {
-  var salt = crypto.randomBytes(16);
-  crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', function (err, hashedPassword) {
-    if (err) {
-      return next(err);
-    }
-    db.run('INSERT INTO users (username, hashed_password, salt) VALUES (?, ?, ?)', [req.body.username, hashedPassword, salt], function (err) {
-      if (err) {
-        return next(err);
-      }
-      var user = {
-        id: this.lastID,
-        username: req.body.username,
-      };
-      req.login(user, function (err) {
-        if (err) {
-          return next(err);
-        }
-        res.redirect('/');
-      });
-    });
-  });
 });
 
 module.exports = router;

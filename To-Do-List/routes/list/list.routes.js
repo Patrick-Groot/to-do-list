@@ -38,7 +38,6 @@ router.post('/:id', async (req, res, next) => {
   req.session.list = list;
   console.log('POST SESSION----------->', req.session);
   res.redirect('/list');
-  // res.render('myList', { list });
 });
 
 router.get('/list', async (req, res, next) => {
@@ -50,9 +49,8 @@ router.get('/list', async (req, res, next) => {
 });
 
 router.post('/:id/newitem', async (req, res, next) => {
-
   const newItem = await Item.create({ name: req.body.itemName, deadline: req.body.itemDeadline });
-  console.log("reqBodyitemDeadline: ", req.body.itemDeadline);
+  console.log('reqBodyitemDeadline: ', req.body.itemDeadline);
   const foundList = await List.findByIdAndUpdate(
     req.params.id,
     {
@@ -93,8 +91,8 @@ router.post('/:listId/:itemId/edit', async (req, res, next) => {
   );
   await listWithItemToEdit.populate('items');
   req.session.list = listWithItemToEdit;
-  console.log("itemID: ", req.params.itemId);
-  console.log("Req Ses List: ", req.session.list.items[0].id);
+  console.log('itemID: ', req.params.itemId);
+  console.log('Req Ses List: ', req.session.list.items[0].id);
   res.redirect('/list');
 });
 
@@ -106,10 +104,6 @@ router.post('/:listId/edit', async (req, res, next) => {
     },
     { new: true }
   );
- /*  console.log('List to edit: ', listToEdit);
-  console.log('Req Body: ', req.body);
-  const foundUser = await User.findById(req.user.id);
-  await foundUser.populate('lists'); */
   res.redirect('/dashboard');
 });
 
