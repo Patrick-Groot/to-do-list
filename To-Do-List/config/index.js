@@ -36,24 +36,12 @@ module.exports = (app) => {
   // Handles access to the public folder
   app.use(express.static(path.join(__dirname, '..', 'public')));
 
-  // app.use(function (req, res, next) {
-  //   const msgs = req.session.messages || [];
-  //   res.locals.messages = msgs;
-  //   res.locals.hasMessages = !!msgs.length;
-  //   req.session.messages = [];
-  //   next();
-  // });
-
-  // Make `user` and `authenticated` available in templates
-  
-
   app.use(passport.authenticate('session'));
 
   // Handles access to the favicon
   app.use(favicon(path.join(__dirname, '..', 'public', 'images', 'favicon.ico')));
-  app.use(function (req, res, next) {    
+  app.use(function (req, res, next) {
     res.locals.user = req.user;
     next();
-  })
+  });
 };
-
