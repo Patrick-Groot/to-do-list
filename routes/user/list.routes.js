@@ -11,6 +11,7 @@ const Item = require('../../models/Item.model');
 router.post('/:id', async (req, res, next) => {
   const list = await List.findById(req.params.id);
   await list.populate('items');
+  console.log(list.items);  
   req.session.list = list;
   console.log('POST SESSION----------->', req.session);
   res.redirect('/list');
@@ -29,8 +30,7 @@ router.get('/list', async (req, res, next) => {
 router.post('/:id/newitem', async (req, res, next) => {
   const nameForNewItem = req.sanitize(req.body.itemName);
   const deadlineForNewItem = req.sanitize(req.body.itemDeadline);
-
-  const newItem = await Item.create({ name: nameForNewItem, deadline: deadlineForNewItem });
+  const newItem = await Item.create({ name: nameForNewItem, deadline: deadlineForNewItem, done: false });
   console.log('reqBodyitemDeadline: ', req.body.itemDeadline);
   const foundList = await List.findByIdAndUpdate(
     req.params.id,
@@ -59,6 +59,14 @@ router.post('/:listId/:itemId/delete', async (req, res, next) => {
   await listWithItemToDelete.populate('items');
   req.session.list = listWithItemToDelete;
   res.redirect('/list');
+});
+
+router.post("/:listId/:itemId/done", async (req, res, next) => {
+  const itemDone = await Item.findByIdAndUpdate(req.params.itemId, { done: true });
+  const list = await List.findById(req.params.listId);
+  await list.populate("items");
+  req.session.list = list;
+  res.redirect("/list");
 });
 
 // POST edit list item

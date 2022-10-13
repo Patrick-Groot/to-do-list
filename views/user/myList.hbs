@@ -3,6 +3,8 @@
 
 <table class='table table-hover w-50'>
   {{#each list.items}}
+  {{#unless done}}
+  
     <tr>
       <td> <h4>{{name}}</h4> </td>
         <td><p>{{deadline}}</p></td>
@@ -20,7 +22,7 @@
 
           <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
             <div class='col-md-auto'>
-              <label for='name'>Edit Name:</label>
+              <label for='name'>Edit Name:</label>              
             </div>
             <div class='col-md-auto'>
               <input type='text' name='name' value='{{name}}' class='form-control form-control-sm mb-1' required />
@@ -38,15 +40,77 @@
         </div>
         <div class='col-md-auto'>
           <td>
+            <form class='mt-2' action='/{{../list._id}}/{{_id}}/done' method='POST'>
+              <button class='mb-2 ms-2' type='submit'><i class='bi bi-check-circle-fill text-success'></i></button>
+            </form>
+          </td>
+          <td>
             <form class='mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
               <button class='mb-2 ms-2' type='submit'><i class='bi bi-x-circle-fill text-danger'></i></button>
             </form>
-          </td>
+          </td>          
         </div>
       </td>
     </tr>
+    {{/unless}}
   {{/each}}
 </table>
+
+<table class='table table-hover w-50'>
+  {{#each list.items}}
+  {{#if done}}
+  
+    <tr>
+      <td> <h4>{{name}}</h4> </td>
+        <td><p>{{deadline}}</p></td>
+      <td>
+        <div class='btn-group'>
+          <button
+            type='button'
+            class='btn btn-secondary btn-sm dropdown-toggle'
+            data-bs-toggle='dropdown'
+            aria-expanded='false'
+            data-bs-auto-close='outside'
+          >
+            Edit
+          </button>
+
+          <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
+            <div class='col-md-auto'>
+              <label for='name'>Edit Name:</label>              
+            </div>
+            <div class='col-md-auto'>
+              <input type='text' name='name' value='{{name}}' class='form-control form-control-sm mb-1' required />
+            </div>
+            <div class='col-md-auto'>
+              <label for='name'>Edit Deadline:</label>
+            </div>
+            <div class='col-md-auto'>
+              <input type='date' name='deadline' value='{{deadline}}' class='form-control form-control-sm mb-1'/>
+            </div>
+            <div class='col-md-auto'>
+              <button type='submit' class='btn btn-secondary btn-sm'>Save changes</button>
+            </div>            
+          </form>
+        </div>
+        <div class='col-md-auto'>
+          <td>
+            <form class='mt-2' action='/{{../list._id}}/{{_id}}/done' method='POST'>
+              <button class='mb-2 ms-2' type='submit'><i class='bi bi-check-circle-fill text-success'></i></button>
+            </form>
+          </td>
+          <td>
+            <form class='mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
+              <button class='mb-2 ms-2' type='submit'><i class='bi bi-x-circle-fill text-danger'></i></button>
+            </form>
+          </td>          
+        </div>
+      </td>
+    </tr>
+    {{/if}}
+  {{/each}}
+</table>
+
 
 <form class='w-25 mt-2' action='/{{list._id}}/newitem' method='POST'>
   <div class='mb-4'>
