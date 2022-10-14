@@ -7,15 +7,15 @@ document.addEventListener(
 );
 
 const expandButton = document.getElementById('expandButton');
-const saveChangesToItemButton = document.getElementsByClassName('save-changes-to-item')[0];
+const doneList = document.getElementById('done');
 
 expandButton.addEventListener('click', () => {
   const expandButtonAria = expandButton.getAttribute('aria-expanded');
   if (expandButtonAria == 'true') {
-    expandButton.innerHTML = 'hide done';
+    expandButton.innerHTML = 'hide done &uarr;';
+    doneList.style.backgroundColor = 'rgb(225, 255, 228)';
   } else {
-    expandButton.innerHTML = 'show done';
+    expandButton.innerHTML = 'show done &darr;';
+    doneList.style.backgroundColor = 'transparent';
   }
 });
-
-// console.log(expandButton);

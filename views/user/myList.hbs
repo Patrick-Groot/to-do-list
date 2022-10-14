@@ -1,126 +1,133 @@
+<div class='list-container to-do d-flex flex-column m-3'>
+  <h3 class='display-5 text-center m-5'>{{list.name}}</h3>
+  <table class='table table-hover list'>
+    {{#each list.items}}
+      {{#unless done}}
 
-<div class="list-container d-flex flex-column m-3">
-<h3 class='display-5 text-center m-5'>{{list.name}}</h3>
-<table class='table table-hover list'>
-  {{#each list.items}}
-  {{#unless done}}
-  
-    <tr>
-      <td class="min-width"> <h4>{{name}}</h4> </td>
-        <td><p class="mt-2">{{deadline}}</p></td>
-      <td class="w-auto">
-        <div class='btn-group'>
-          <button
-            type='button'
-            class='btn btn-secondary btn-sm dropdown-toggle mt-1'
-            data-bs-toggle='dropdown'
-            aria-expanded='false'
-            data-bs-auto-close='outside'
-          >
-            Edit
-          </button>
+        <tr>
+          <td class='min-width'> <h4>{{name}}</h4> </td>
+          <td><p class='mt-2'>{{deadline}}</p></td>
+          <td class='w-auto'>
+            <div class='btn-group'>
+              <button
+                type='button'
+                class='btn btn-secondary btn-sm dropdown-toggle mt-1'
+                data-bs-toggle='dropdown'
+                aria-expanded='false'
+                data-bs-auto-close='outside'
+              >
+                Edit
+              </button>
 
-          <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
-            <div class='col-md-auto'>
-              <label for='name'>Edit Name:</label>              
+              <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
+                <div class='col-md-auto'>
+                  <label for='name'>Edit Name:</label>
+                </div>
+                <div class='col-md-auto'>
+                  <input type='text' name='name' value='{{name}}' class='form-control form-control-sm mb-1' required />
+                </div>
+                <div class='col-md-auto'>
+                  <label for='name'>Edit Deadline:</label>
+                </div>
+                <div class='col-md-auto'>
+                  <input type='date' name='deadline' value='{{deadline}}' class='form-control form-control-sm mb-1' />
+                </div>
+                <div class='col-md-auto'>
+                  <button type='submit' class='btn btn-secondary btn-sm'>Save changes</button>
+                </div>
+              </form>
             </div>
             <div class='col-md-auto'>
-              <input type='text' name='name' value='{{name}}' class='form-control form-control-sm mb-1' required />
+              <td class='d-flex'>
+                <form class='mt-2' action='/{{../list._id}}/{{_id}}/done' method='POST'>
+                  <button class='btn btn-link' type='submit'><i class='bi bi-check-circle-fill text-success'></i></button>
+                </form>
+                <form class='mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
+                  <button class='btn btn-link' type='submit'><i class='bi bi-x-circle-fill text-danger'></i></button>
+                </form>
+              </td>
             </div>
-            <div class='col-md-auto'>
-              <label for='name'>Edit Deadline:</label>
-            </div>
-            <div class='col-md-auto'>
-              <input type='date' name='deadline' value='{{deadline}}' class='form-control form-control-sm mb-1'/>
-            </div>
-            <div class='col-md-auto'>
-              <button type='submit' class='btn btn-secondary btn-sm'>Save changes</button>
-            </div>            
-          </form>
-        </div>
-        <div class='col-md-auto'>
-          <td class="d-flex">
-            <form class='mt-2' action='/{{../list._id}}/{{_id}}/done' method='POST'>
-              <button class='btn btn-link' type='submit'><i class='bi bi-check-circle-fill text-success'></i></button>
-            </form>
-            <form class='mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
-              <button class=' btn btn-link' type='submit'><i class='bi bi-x-circle-fill text-danger'></i></button>
-            </form>
-          </td>         
-        </div>
-      </td>
-    </tr>
-    {{/unless}}
-  {{/each}}
-</table>
-{{#if list.items}}
-<button id="expandButton" class="btn btn-secondary btn-sm align-self-end mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseList" aria-expanded="false" aria-controls="collapseList">
-    show done
-  </button>
+          </td>
+        </tr>
+      {{/unless}}
+    {{/each}}
+  </table>
+  {{#if list.items}}
+    <button
+      id='expandButton'
+      class='btn btn-secondary btn-sm align-self-end mb-3'
+      type='button'
+      data-bs-toggle='collapse'
+      data-bs-target='#collapseList'
+      aria-expanded='false'
+      aria-controls='collapseList'
+    >
+      show done &darr;
+    </button>
   {{else}}
-  <h4 class='text-center'>You have no items yet :(</h4>
-{{/if}}
+    <h4 class='text-center'>You have no items yet :(</h4>
+  {{/if}}
 </div>
 
-<div class="list-container m-3">
-<table class='table table-hover collapse list' id="collapseList" >
-  {{#each list.items}}
-  {{#if done}}
-    <tr>
-      <td class="min-width"> <h4>{{name}}</h4> </td>
-        <td><p class="mt-2">{{deadline}}</p></td>
-      <td>
-        <div class='btn-group'>
-          <button
-            type='button'
-            class='btn btn-secondary btn-sm dropdown-toggle mt-1'
-            data-bs-toggle='dropdown'
-            aria-expanded='false'
-            data-bs-auto-close='outside'
-          >
-            Edit
-          </button>
+<div class='list-container mx-3' id='done'>
+  <table class='table table-hover collapse list' id='collapseList'>
+    {{#each list.items}}
+      {{#if done}}
+        <tr>
+          <td class='min-width'> <h4>{{name}}</h4> </td>
+          <td><p class='mt-2'>{{deadline}}</p></td>
+          <td>
+            <div class='btn-group'>
+              <button
+                type='button'
+                class='btn btn-secondary btn-sm dropdown-toggle mt-1'
+                data-bs-toggle='dropdown'
+                aria-expanded='false'
+                data-bs-auto-close='outside'
+              >
+                Edit
+              </button>
 
-          <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
-            <div class='col-md-auto'>
-              <label for='name'>Edit Name:</label>              
+              <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
+                <div class='col-md-auto'>
+                  <label for='name'>Edit Name:</label>
+                </div>
+                <div class='col-md-auto'>
+                  <input type='text' name='name' value='{{name}}' class='form-control form-control-sm mb-1' required />
+                </div>
+                <div class='col-md-auto'>
+                  <label for='name'>Edit Deadline:</label>
+                </div>
+                <div class='col-md-auto'>
+                  <input type='date' name='deadline' value='{{deadline}}' class='form-control form-control-sm mb-1' />
+                </div>
+                <div class='col-md-auto'>
+                  <button type='submit' class='btn btn-secondary btn-sm'>Save changes</button>
+                </div>
+              </form>
             </div>
             <div class='col-md-auto'>
-              <input type='text' name='name' value='{{name}}' class='form-control form-control-sm mb-1' required />
+              <td class='d-flex'>
+                <form class='mt-2' action='/{{../list._id}}/{{_id}}/done' method='POST'>
+                  <button class='btn btn-link' type='submit'><i class='bi bi-arrow-counterclockwise text-success'></i></button>
+                </form>
+                <form class='mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
+                  <button class='btn btn-link' type='submit'><i class='bi bi-x-circle-fill text-danger'></i></button>
+                </form>
+              </td>
             </div>
-            <div class='col-md-auto'>
-              <label for='name'>Edit Deadline:</label>
-            </div>
-            <div class='col-md-auto'>
-              <input type='date' name='deadline' value='{{deadline}}' class='form-control form-control-sm mb-1'/>
-            </div>
-            <div class='col-md-auto'>
-              <button type='submit' class='btn btn-secondary btn-sm'>Save changes</button>
-            </div>            
-          </form>
-        </div>
-        <div class='col-md-auto'>
-          <td class="d-flex" >
-            <form class='mt-2' action='/{{../list._id}}/{{_id}}/done' method='POST'>
-              <button class='btn btn-link' type='submit'><i class='bi bi-arrow-counterclockwise text-success'></i></button>
-            </form>
-            <form class='mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
-              <button class='btn btn-link' type='submit'><i class='bi bi-x-circle-fill text-danger'></i></button>
-            </form>
-          </td>         
-        </div>
-      </td>
-    </tr>
-    {{/if}}
-  {{/each}}
-</table>
+          </td>
+        </tr>
+      {{/if}}
+    {{/each}}
+  </table>
+</div>
 
-<form class='mt-2' action='/{{list._id}}/newitem' method='POST'>
+<form class='mt-2 mx-3 list-container' action='/{{list._id}}/newitem' method='POST'>
   <div class='mb-4'>
     <label for='itemName' class='form-label text-secondary'>Create new item</label>
     <input type='text' name='itemName' class='form-control' required />
-    <input type="date" name="itemDeadline" class="form-control form-control-sm mb-1 mt-1">
+    <input type='date' name='itemDeadline' class='form-control form-control-sm mb-1 mt-1' />
   </div>
   <button type='submit' class='btn btn-secondary'>Save new item</button>
 </form>
-</div>

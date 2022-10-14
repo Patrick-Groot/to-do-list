@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const List = require('../../models/List.model');
 const User = require('../../models/User.model');
+const Item = require('../../models/Item.model');
 
 // require auth middleware
 const { isLoggedIn } = require('../../middleware/route-guard.js');
