@@ -61,9 +61,13 @@ router.post('/:listId/:itemId/delete', async (req, res, next) => {
   res.redirect('/list');
 });
 
-// Post mark item as "done" or "undone"
+// POST mark item as "done" or "undone"
 router.post('/:listId/:itemId/done', async (req, res, next) => {
-  const itemDone = await Item.findByIdAndUpdate(req.params.itemId, { done: true });
+  const itemToMark = await Item.findById(req.params.itemId);
+  console.log(itemToMark);
+  if (itemToMark.done === false) {
+    await Item.findByIdAndUpdate(req.params.itemId, { done: true });
+  } else await Item.findByIdAndUpdate(req.params.itemId, { done: false });
   const list = await List.findById(req.params.listId);
   await list.populate('items');
   req.session.list = list;
