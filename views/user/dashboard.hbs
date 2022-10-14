@@ -1,31 +1,29 @@
-<div class='w-100'>
-
-  <div class='card text-bg-secondary m-5' style='max-width: 20rem;'>
-    <div class='card-header'>Welcome {{foundUser.username}}!</div>
-    <div class='card-body'>
-      <p class='card-text'>Are you ready to do some things today?</p>
-    </div>
-  </div>
+<div class='p-3'>
 
   {{#with foundUser}}
-    <h2>Lists of {{username}}</h2>
-    <table class='table table-hover w-50'>
+    <h1 class='display-5 mt-3 mb-5 border-bottom'>Welcome {{username}}!</h1>
+    {{#if lists}}
+      <h3 class='mt-3'>Your lists:</h3>
+    {{else}}
+      <h4 class='mt-3'>You have no lists yet :(</h4>
+    {{/if}}
+    <table class='table table-hover list'>
       {{#each lists}}
         <tr>
-          <td>
-            <form class='nav-item ms-5' action='/{{this.id}}' method='POST'>
+          <td class='min-width'>
+            <form class='nav-item' action='/{{this.id}}' method='POST'>
               {{! <input type="text" name! value! hidden> *Idee von Rico, wie man "versteckt" values mitschickt...}}
-              <button type='submit' class='btn btn-sm btn-outline-secondary'>{{this.name}}</button>
+              <button type='submit' class='btn btn-outline-secondary ps-4 pe-4 mt-2'>{{this.name}}</button>
             </form>
           </td>
-          <td>
+          {{!-- <td>
             <p class='text-muted'>{{toLocaleString this.createdAt}}</p>
-          </td>
+          </td> --}}
           <td>
             <div class='btn-group'>
               <button
                 type='button'
-                class='btn btn-secondary btn-sm dropdown-toggle'
+                class='btn btn-secondary btn-sm dropdown-toggle mt-2'
                 data-bs-toggle='dropdown'
                 aria-expanded='false'
                 data-bs-auto-close='outside'
@@ -49,7 +47,7 @@
             <div class='col-md-auto'>
               <td>
                 <form class='w-50 mt-2' action='/{{this.id}}/delete' method='POST'>
-                  <button class='mb-2 ms-2' type='submit'><i class='bi bi-x-circle-fill text-danger'></i></button>
+                  <button class='btn btn-link' type='submit'><i class='bi bi-x-circle-fill text-danger'></i></button>
                 </form>
               </td>
             </div>
