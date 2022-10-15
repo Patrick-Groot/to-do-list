@@ -103,7 +103,7 @@ router.post('/signup', async (req, res, next) => {
     const hashedPassword = await bcryptjs.hash(password, salt);
     const createdUser = await User.create({ username, passwordHash: hashedPassword });
     console.log('new user:', createdUser);
-    res.redirect('/dashboard');
+    res.redirect('/login');
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
       res.status(500).render('auth/signup', { errorMessage: error.message });
