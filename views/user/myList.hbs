@@ -3,16 +3,14 @@
   <table class='table table-hover list'>
     {{#each list.items}}
       {{#unless done}}
-
         <tr>
-          <td class='min-width'> <h4>{{name}}</h4> </td>
-          <td><p class='mt-2'>{{deadline}}</p></td>
-          {{#unless deadlinePassed}}
-          <td><p class='mt-2'>false</p></td>
-          {{/unless}}
           {{#if deadlinePassed}}
-          <td><p class='mt-2'>true</p></td>
+          <td class='min-width text-danger'> <h4>{{name}}</h4> </td>
           {{/if}}
+          {{#unless deadlinePassed}}
+          <td class='min-width text-success'> <h4>{{name}}</h4> </td>
+          {{/unless}}
+          <td><p class='mt-2'>{{deadline}}</p></td>
           <td class='w-auto'>
             <div class='btn-group'>
               <button
@@ -82,9 +80,6 @@
         <tr>
           <td class='min-width'> <h4>{{name}}</h4> </td>
           <td><p class='mt-2'>{{deadline}}</p></td>
-          {{#unless deadlinePassed}}
-          <td><p class='mt-2'>Hooray</p></td>
-          {{/unless}}
           <td>
             <div class='btn-group'>
               <button
