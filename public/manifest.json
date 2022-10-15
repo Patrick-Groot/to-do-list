@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/web-manifest-combined.json",
   "name": "Do it!",
   "short_name": "Do it!",
-  "start_url": "https://fair-ruby-clownfish.cyclic.app/",
+  "start_url": "https://fair-ruby-clownfish.cyclic.app/login",
   "display": "standalone",
   "background_color": "#fff",
   "description": "A to-do list",
