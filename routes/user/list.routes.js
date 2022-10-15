@@ -30,7 +30,14 @@ router.get("/list", async (req, res, next) => {
     sortedList.items.sort(
       (a, b) => new Date(a.deadline) - new Date(b.deadline)
     );
-    //console.log(sortedList)
+    sortedList.items.forEach((item) => {
+      const date = new Date();
+      date.setDate(date.getDate());
+      date.setHours(0, 0, 0, 0);
+      if (new Date(item.deadline) < date) {
+        item.deadlinePassed = true;
+      }
+    });
     res.render("user/myList", { list: sortedList });
   } catch (err) {
     console.error("Sorry, there was an error: ", err);
@@ -47,6 +54,7 @@ router.post("/:id/newitem", async (req, res, next) => {
       name: nameForNewItem,
       deadline: deadlineForNewItem,
       done: false,
+      deadlinePassed: false,
     });
     console.log("reqBodyitemDeadline: ", req.body.itemDeadline);
     const foundList = await List.findByIdAndUpdate(
