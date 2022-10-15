@@ -7,7 +7,7 @@
   "scope": "/",
   "theme_color": "#3367D6",
   "start_url": "https://fair-ruby-clownfish.cyclic.app/dashboard",
-  "display": "standalone",
+  "display": "minimal-ui",
 
   "description": "A to-do list",
   "icons": [
