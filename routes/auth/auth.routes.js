@@ -30,16 +30,8 @@ passport.use(
       // Check if user and password is valid
       let user = await User.findOne({ username });
       let passwordValid = user && bcryptjs.compareSync(password, user.passwordHash);
-
-      if (!passwordValid || !user) {
-        console.log(req.session);
-        return done(null, false, { message: 'Incorrect Zebra or password.' });
-      }
-
       // If password valid call done and serialize user.id to req.user property
       if (passwordValid) {
-        console.log('Logged in');
-        console.log(req.session);
         return done(null, {
           id: user.id,
           name: user.username,
@@ -77,7 +69,6 @@ router.post(
   passport.authenticate('local-login', {
     successReturnToOrRedirect: '/dashboard',
     failureRedirect: '/login',
-    failureMessage: true,
     successFlash: true,
     failureFlash: true,
     successFlash: 'Succesfull!',
@@ -117,7 +108,13 @@ router.post('/signup', async (req, res, next) => {
     const hashedPassword = await bcryptjs.hash(password, salt);
     const createdUser = await User.create({ username, passwordHash: hashedPassword });
     console.log('new user:', createdUser);
-    res.redirect('/login');
+    // res.redirect('/login');
+    req.login(createdUser, function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.redirect('/dashboard');
+    });
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
       res.status(500).render('auth/signup', { errorMessage: error.message });
