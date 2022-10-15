@@ -1,5 +1,3 @@
-import './registerServiceWorker';
-
 document.addEventListener(
   'DOMContentLoaded',
   () => {
