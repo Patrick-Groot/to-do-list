@@ -31,11 +31,15 @@ passport.use(
       let user = await User.findOne({ username });
       let passwordValid = user && bcryptjs.compareSync(password, user.passwordHash);
 
-      console.log(user);
+      if (!passwordValid || !user) {
+        console.log(req.session);
+        return done(null, false, { message: 'Incorrect Zebra or password.' });
+      }
 
       // If password valid call done and serialize user.id to req.user property
       if (passwordValid) {
         console.log('Logged in');
+        console.log(req.session);
         return done(null, {
           id: user.id,
           name: user.username,
@@ -74,6 +78,10 @@ router.post(
     successReturnToOrRedirect: '/dashboard',
     failureRedirect: '/login',
     failureMessage: true,
+    successFlash: true,
+    failureFlash: true,
+    successFlash: 'Succesfull!',
+    failureFlash: 'Invalid username or password.',
   })
 );
 
