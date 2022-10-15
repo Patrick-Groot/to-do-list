@@ -5,11 +5,10 @@ document.addEventListener(
   },
   false
 );
+const expandButton = document.getElementById('expandButton');
+const doneList = document.getElementById('done');
 
-window.onload = () => {
-  const expandButton = document.getElementById('expandButton');
-  const doneList = document.getElementById('done');
-
+if (expandButton) {
   expandButton.addEventListener('click', () => {
     const expandButtonAria = expandButton.getAttribute('aria-expanded');
     if (expandButtonAria == 'true') {
@@ -20,4 +19,4 @@ window.onload = () => {
       doneList.style.backgroundColor = 'transparent';
     }
   });
-};
+}

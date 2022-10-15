@@ -19,7 +19,7 @@
 }
 
 #done {
-  background-color: rgb(225, 255, 228);
+  background-color: transparent;
   padding: 10px 10px 10px 10px;
   border-radius: 10px;
 }
