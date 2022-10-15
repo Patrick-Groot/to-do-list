@@ -4,6 +4,9 @@ const express = require('express');
 // Sanatizing input
 const expressSanitizer = require('express-sanitizer');
 
+// display errorMessages on in HBS (LOGIN)
+const flash = require('connect-flash');
+
 const passport = require('passport');
 
 // ℹ️ Responsible for the messages you see in the terminal as requests are coming in
@@ -34,7 +37,7 @@ module.exports = (app) => {
 
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
-
+  app.use(flash());
   // Normalizes the path to the views folder
   app.set('views', path.join(__dirname, '..', 'views'));
   // Sets the view engine to handlebars
