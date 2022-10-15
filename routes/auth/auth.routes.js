@@ -65,11 +65,11 @@ passport.deserializeUser(function (user, cb) {
 // Login Routes
 router.get('/login', isLoggedOut, function (req, res, next) {
   try {
-    res.render('auth/login');
+    res.render('auth/login', { message: req.flash('error') });
   } catch (err) {
-    console.error("Sorry, there was an error: ", err);
-    res.render("error");
-  }  
+    console.error('Sorry, there was an error: ', err);
+    res.render('error');
+  }
 });
 
 router.post(
@@ -90,8 +90,8 @@ router.get('/signup', isLoggedOut, (req, res, next) => {
   try {
     res.render('auth/signup');
   } catch (err) {
-    console.error("Sorry, there was an error: ", err);
-    res.render("error");
+    console.error('Sorry, there was an error: ', err);
+    res.render('error');
   }
 });
 
@@ -141,9 +141,9 @@ router.post('/logout', isLoggedIn, function (req, res, next) {
       res.redirect('/');
     });
   } catch (err) {
-    console.error("Sorry, there was an error: ", err);
-    res.render("error");
-  }  
+    console.error('Sorry, there was an error: ', err);
+    res.render('error');
+  }
 });
 
 module.exports = router;
