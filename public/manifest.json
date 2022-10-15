@@ -8,7 +8,6 @@
   "theme_color": "#3367D6",
   "start_url": "https://fair-ruby-clownfish.cyclic.app/dashboard",
   "display": "minimal-ui",
-
   "description": "A to-do list",
   "icons": [
     {
@@ -23,5 +22,10 @@
       "type": "image/png",
       "purpose": "any"
     }
-  ]
+  ],
+  "dir": "ltr",
+  "lang": "en",
+  "orientation": "portrait",
+  "display_override": [],
+  "categories": ["productivity"]
 }
