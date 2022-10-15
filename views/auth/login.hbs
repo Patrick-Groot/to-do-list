@@ -27,7 +27,12 @@
             <button class='w-100 btn btn-lg btn-secondary' type='submit'>Login</button>
             <hr class='my-4' />
             {{#if message}}
-              <h6 class='text-danger'>{{message}}</h6>
+              <div class='card bg-secondary'>
+                <div class='card-body'>
+                  <h5 class='card-title text-warning'>{{errorHeader}}</h5>
+                  <h6 class='card-subtitle text-warning'>{{message}}</h6>
+                </div>
+              </div>
               <hr class='my-4' />
             {{/if}}
             <small class='text-muted'>Not a user yet? <a href='/signup'>Sign up</a> here </small>
@@ -37,13 +42,3 @@
     </div>
   </div>
 </div>
-
-{{! For later use }}
-{{#if errorMessage}}
-  <div class='card bg-secondary w-50 m-3 p-1'>
-    <div class='card-body'>
-      <h5 class='card-title text-warning'>{{errorHeader}}</h5>
-      <h6 class='card-subtitle mb-2 text-warning'>{{errorMessage}}</h6>
-    </div>
-  </div>
-{{/if}}
