@@ -7,6 +7,12 @@
         <tr>
           <td class='min-width'> <h4>{{name}}</h4> </td>
           <td><p class='mt-2'>{{deadline}}</p></td>
+          {{#unless deadlinePassed}}
+          <td><p class='mt-2'>false</p></td>
+          {{/unless}}
+          {{#if deadlinePassed}}
+          <td><p class='mt-2'>true</p></td>
+          {{/if}}
           <td class='w-auto'>
             <div class='btn-group'>
               <button
@@ -76,6 +82,9 @@
         <tr>
           <td class='min-width'> <h4>{{name}}</h4> </td>
           <td><p class='mt-2'>{{deadline}}</p></td>
+          {{#unless deadlinePassed}}
+          <td><p class='mt-2'>Hooray</p></td>
+          {{/unless}}
           <td>
             <div class='btn-group'>
               <button

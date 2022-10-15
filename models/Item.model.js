@@ -7,6 +7,7 @@ const itemSchema = new Schema(
     },
     done: Boolean,
     deadline: String,
+    deadlinePassed: Boolean,
   },
   {
     timestamps: true, // ?
