@@ -64,7 +64,7 @@ passport.deserializeUser(function (user, cb) {
 
 // Login Routes
 router.get('/login', isLoggedOut, function (req, res, next) {
-  res.render('auth/login');
+  res.render('auth/login', { message: req.flash('error') });
 });
 
 router.post(
@@ -76,12 +76,8 @@ router.post(
     successFlash: true,
     failureFlash: true,
     successFlash: 'Succesfull!',
-    failureFlash: 'Invalid Elephant or password.',
-  }),
-  function (req, res, next) {
-    console.log('req', req);
-    console.log('req.failureMessage', req.failureMessage);
-  }
+    failureFlash: 'Invalid username or password.',
+  })
 );
 
 // Signup Routes
