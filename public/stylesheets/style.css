@@ -23,3 +23,7 @@
   padding: 10px 10px 10px 10px;
   border-radius: 10px;
 }
+
+.navbar-toggler-icon {
+  font-size: 0.6em;
+}
