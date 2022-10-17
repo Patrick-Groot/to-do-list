@@ -1,6 +1,6 @@
 // https://www.makeuseof.com/user-authentication-in-nodejs/
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const userSchema = new Schema(
@@ -13,7 +13,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    lists: [{ type: Schema.Types.ObjectId, ref: 'List' }],
+    lists: [{ type: Schema.Types.ObjectId, ref: "List" }],
+    settings: {
+      type: Object,
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt` // ?
@@ -21,6 +24,6 @@ const userSchema = new Schema(
   }
 );
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

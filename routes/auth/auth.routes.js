@@ -120,7 +120,7 @@ router.post('/signup', async (req, res, next) => {
       res.status(500).render('auth/signup', { errorMessage: error.message });
     } else if (error.code === 11000) {
       res.status(500).render('auth/signup', {
-        errorMessage: 'Username and email need to be unique. Either username or email is already used.',
+        errorMessage: 'Username needs to be unique, but is already used.',
       });
     } else {
       next(error);

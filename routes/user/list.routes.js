@@ -38,7 +38,11 @@ router.get("/list", async (req, res, next) => {
         item.deadlinePassed = true;
       }
     });
-    res.render("user/myList", { list: sortedList });
+    const foundUser = await User.findById(req.user.id);
+    if (!foundUser.settings.darkmode) {
+      return res.render("user/myList", { list: sortedList });
+    }
+    return res.render("user/myList", { list: sortedList, layout: "layout-darkmode" });
   } catch (err) {
     console.error("Sorry, there was an error: ", err);
     res.render("error");
