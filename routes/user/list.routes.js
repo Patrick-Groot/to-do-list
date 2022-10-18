@@ -39,10 +39,11 @@ router.get("/list", async (req, res, next) => {
       }
     });
     const foundUser = await User.findById(req.user.id);
+    const darkmode = {};
     if (!foundUser.settings.darkmode) {
       return res.render("user/myList", { list: sortedList });
     }
-    return res.render("user/myList", { list: sortedList });
+    return res.render("user/myList", { list: sortedList, darkmode });
   } catch (err) {
     console.error("Sorry, there was an error: ", err);
     res.render("error");

@@ -13,10 +13,11 @@ router.get("/dashboard", isLoggedIn, async function (req, res, next) {
     console.log("Found User Name: ", foundUser.username);
     console.log("Found User Settings: ", foundUser.settings.darkmode);
     await foundUser.populate("lists");
+    const darkmode = {};
     if (!foundUser.settings.darkmode) {
       return res.render("user/dashboard", { foundUser });
     }
-    return res.render("user/dashboard", { foundUser });
+    return res.render("user/dashboard", { foundUser, darkmode });
   } catch (err) {
     console.error("Sorry, there was an error: ", err);
     res.render("error");
@@ -79,12 +80,10 @@ router.post("/:listId/delete", async (req, res, next) => {
   }
 });
 
-router.get("/darkmode", async (req, res, next) => {
+router.post("/darkmode", async (req, res, next) => {
   try {
-    console.log("Test");
     console.log(req.session.passport.user.id)
-    const currentUser = await User.findByIdAndUpdate(req.session.passport.user.id, { settings: {"darkmode": true}}) 
-    switchDarkmode();
+    await User.findByIdAndUpdate(req.session.passport.user.id, { settings: {"darkmode": true}})     
     res.redirect("/dashboard");
   } catch (err) {
     console.error("Sorry, there was an error: ", err);
@@ -92,13 +91,11 @@ router.get("/darkmode", async (req, res, next) => {
   }
 });
 
-router.get("/lightmode", async (req, res, next) => {
+router.post("/lightmode", async (req, res, next) => {
   try {
-    console.log("Test");
     console.log(req.session.passport.user.id)
-    const currentUser = await User.findByIdAndUpdate(req.session.passport.user.id, { settings: {"darkmode": false}}) 
-    switchDarkmode();
-    res.redirect("/dashboard");
+    await User.findByIdAndUpdate(req.session.passport.user.id, { settings: {"darkmode": false}})
+        res.redirect("/dashboard");    
   } catch (err) {
     console.error("Sorry, there was an error: ", err);
     res.render("error");

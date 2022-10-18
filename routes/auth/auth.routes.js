@@ -44,7 +44,7 @@ passport.use(
 
 passport.serializeUser(function (user, cb) {  
   process.nextTick(function () {
-    cb(null, { id: user.id, username: user.username, darkmode: user.settings.darkmode });
+    cb(null, { id: user.id, username: user.username });
   });
 });
 

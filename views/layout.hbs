@@ -22,12 +22,22 @@
     />
     <meta name="theme-color" content="#f8f9fa" />
   </head>
-  <body class="bg-light p-3 mb-0 d-flex flex-column min-vh-100" id="body">
-    <nav class="navbar navbar-expand-sm navbar" id="navbar">
+  
+  <body>
+    {{#if darkmode}}
+    <div class="bg-dark p-3 min-vh-100 mb-0 d-flex flex-column min-vh-100 text-white">
+      <nav class="navbar navbar-expand-sm navbar-dark" id="navbar">
+      {{else}}
+      <div class="bg-light p-3 min-vh-100 mb-0 d-flex flex-column min-vh-100">
+        <nav class="navbar navbar-expand-sm" id="navbar">
+        {{/if}}    
+    
+
+      
       <div class="container-fluid">
         <i class="bi bi-check-square me-2"></i>
         <a class="navbar-brand me-5" href="/">Do it!</a>
-
+        
         <button
           class="navbar-toggler"
           type="button"
@@ -48,9 +58,21 @@
               <li class="nav-item">
                 <a class="nav-link" href="/dashboard">Dashboard</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/darkmode">Darkmode</a>
-              </li>
+              {{#if darkmode}}
+              <form class="nav-item" action="/lightmode" method="POST">              
+              <button
+                type="submit"
+                class="btn btn-outline-secondary ps-4 pe-4 mt-2"
+              >Lightmode</button>
+            </form>
+              {{else}}
+              <form class="nav-item" action="/darkmode" method="POST">              
+              <button
+                type="submit"
+                class="btn btn-outline-secondary ps-4 pe-4 mt-2"
+              >Darkmode</button>
+            </form>
+              {{/if}}
             {{/if}}
           </ul>
           <ul class="navbar-nav">
@@ -105,5 +127,6 @@
     ></script>
     <script src="../js/appSw.js"></script>
     <script src="../js/script.js"></script>
+    </div>
   </body>
 </html>
