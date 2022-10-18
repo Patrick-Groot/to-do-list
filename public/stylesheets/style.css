@@ -8,8 +8,13 @@
   width: fit-content;
 }
 
+/* not ideal yet */
+#list {
+  width: 500px;
+}
+
 .min-width {
-  min-width: 10rem;
+  min-width: 25%;
 }
 
 .to-do {
@@ -25,5 +30,9 @@
 }
 
 .navbar-toggler-icon {
-  font-size: 0.6em;
+  font-size: 0.5em;
+}
+
+.date {
+  white-space: nowrap;
 }

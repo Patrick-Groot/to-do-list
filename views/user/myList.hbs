@@ -1,5 +1,5 @@
 <div class='container w-100 mx-auto d-flex justify-content-start'>
-  <div class='p-3 my-4 rounded-3 border shadow-lg d-flex flex-column align-items-center'>
+  <div id='list' class='p-3 my-4 rounded-3 border shadow-lg d-flex flex-column align-items-center'>
 
     {{! List title from here... }}
     <div class=''>
@@ -28,8 +28,8 @@
     <table class='table table-hover'>
       {{#each list.items}}
         {{#unless done}}
-          <tr>
-            <td class='w-auto'>
+          <tr class='h-auto'>
+            <td>
               <div class='btn-group'>
                 {{#if deadlinePassed}}
                   <a
@@ -39,8 +39,7 @@
                     data-bs-toggle='dropdown'
                     aria-expanded='false'
                   >{{name}}</a>
-                {{/if}}
-                {{#unless deadlinePassed}}
+                {{else}}
                   <a
                     class='nav-link fs-4 text text-break text-success'
                     href='#'
@@ -48,7 +47,8 @@
                     data-bs-toggle='dropdown'
                     aria-expanded='false'
                   >{{name}}</a>
-                {{/unless}}
+                {{/if}}
+
                 <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
                   <div class='col-md-auto'>
                   </div>
@@ -66,17 +66,19 @@
                 </form>
               </div>
             </td>
-            <td><p class='mt-2'>{{deadline}}</p></td>
+            {{#if deadlinePassed}}
+              <td><p class='mt-2 date text-danger'>{{deadline}}</p></td>
+            {{else}}
+              <td><p class='mt-2 date'>{{deadline}}</p></td>
+            {{/if}}
             <td>
-              <div class='col-md-auto'>
-                <td class='d-flex'>
-                  <form class='mt-2' action='/{{../list._id}}/{{_id}}/done' method='POST'>
-                    <button class='btn btn-link' type='submit'><i class='bi bi-check-square text-success heading'></i></button>
-                  </form>
-                  <form class='mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
-                    <button class='btn btn-link' type='submit'><i class='bi bi-x-square text-danger'></i></button>
-                  </form>
-                </td>
+              <div class='d-flex pt-1'>
+                <form class='m-0 mt-2 me-2' action='/{{../list._id}}/{{_id}}/done' method='POST'>
+                  <button class='btn btn-link p-0' type='submit'><i class='bi bi-check-square text-success heading'></i></button>
+                </form>
+                <form class='m-0 mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
+                  <button class='btn btn-link p-0' type='submit'><i class='bi bi-x-square text-danger'></i></button>
+                </form>
               </div>
             </td>
           </tr>
@@ -133,17 +135,17 @@
                   </div>
                 </form>
               </div>
-              <td><p class='mt-2'>{{deadline}}</p></td>
-              <div class='col-md-auto'>
-                <td class='d-flex'>
-                  <form class='mt-2' action='/{{../list._id}}/{{_id}}/done' method='POST'>
-                    <button class='btn btn-link' type='submit'><i class='bi bi-check-square text-success heading'></i></button>
+              <td><p class='mt-2 date'>{{deadline}}</p></td>
+              <td>
+                <div class='d-flex pt-1'>
+                  <form class='m-0 mt-2 me-2' action='/{{../list._id}}/{{_id}}/done' method='POST'>
+                    <button class='btn btn-link p-0' type='submit'><i class='bi bi-check-square text-success heading'></i></button>
                   </form>
-                  <form class='mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
-                    <button class='btn btn-link' type='submit'><i class='bi bi-x-square text-danger'></i></button>
+                  <form class='m-0 mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
+                    <button class='btn btn-link p-0' type='submit'><i class='bi bi-x-square text-danger'></i></button>
                   </form>
-                </td>
-              </div>
+                </div>
+              </td>
             </td>
           </tr>
         {{/if}}
