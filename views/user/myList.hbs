@@ -12,7 +12,7 @@
           aria-expanded='false'
         >{{list.name}}</a>
         {{! Not working yet because of missing route          V V V V V V V}}
-        <form class='row dropdown-menu' id='editForm' action='/list/{{list.id}}/edit' method='POST'>
+        <form class='row dropdown-menu' id='editForm' action='/list/edit/{{list._id}}' method='POST'>
           <div class='col-md-auto'>
             <input type='text' name='name' value='{{list.name}}' class='form-control form-control-sm mb-1' required />
           </div>
