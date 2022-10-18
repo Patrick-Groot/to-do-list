@@ -1,35 +1,33 @@
-const router = require("express").Router();
-const List = require("../../models/List.model");
-const User = require("../../models/User.model");
-const Item = require("../../models/Item.model");
+const router = require('express').Router();
+const List = require('../../models/List.model');
+const User = require('../../models/User.model');
+const Item = require('../../models/Item.model');
 
 // Notes from Rico, maybe still useful
 // JS "Window location" to hide params
 // req.session.whatever = data + redirect
 
 // POST got to list
-router.post("/:id", async (req, res, next) => {
+router.post('/:id', async (req, res, next) => {
   try {
     const list = await List.findById(req.params.id);
-    await list.populate("items");
+    await list.populate('items');
     console.log(list.items);
     req.session.list = list;
-    console.log("POST SESSION----------->", req.session);
-    res.redirect("/list");
+    console.log('POST SESSION----------->', req.session);
+    res.redirect('/list');
   } catch (err) {
-    console.error("Sorry, there was an error: ", err);
-    res.render("error");
+    console.error('Sorry, there was an error: ', err);
+    res.render('error');
   }
 });
 
 // GET go to list
-router.get("/list", async (req, res, next) => {
+router.get('/list', async (req, res, next) => {
   try {
     //console.log('GET SESSION----------->', req.session);
     sortedList = JSON.parse(JSON.stringify(req.session.list));
-    sortedList.items.sort(
-      (a, b) => new Date(a.deadline) - new Date(b.deadline)
-    );
+    sortedList.items.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
     sortedList.items.forEach((item) => {
       const date = new Date();
       date.setDate(date.getDate());
@@ -38,15 +36,15 @@ router.get("/list", async (req, res, next) => {
         item.deadlinePassed = true;
       }
     });
-    res.render("user/myList", { list: sortedList });
+    res.render('user/myList', { list: sortedList });
   } catch (err) {
-    console.error("Sorry, there was an error: ", err);
-    res.render("error");
+    console.error('Sorry, there was an error: ', err);
+    res.render('error');
   }
 });
 
 // POST new list item
-router.post("/:id/newitem", async (req, res, next) => {
+router.post('/:id/newitem', async (req, res, next) => {
   try {
     const nameForNewItem = req.sanitize(req.body.itemName);
     const deadlineForNewItem = req.sanitize(req.body.itemDeadline);
@@ -56,7 +54,7 @@ router.post("/:id/newitem", async (req, res, next) => {
       done: false,
       deadlinePassed: false,
     });
-    console.log("reqBodyitemDeadline: ", req.body.itemDeadline);
+    console.log('reqBodyitemDeadline: ', req.body.itemDeadline);
     const foundList = await List.findByIdAndUpdate(
       req.params.id,
       {
@@ -64,18 +62,18 @@ router.post("/:id/newitem", async (req, res, next) => {
       },
       { new: true }
     );
-    await foundList.populate("items");
+    await foundList.populate('items');
     console.log(foundList);
     req.session.list = foundList;
-    res.redirect("/list");
+    res.redirect('/list');
   } catch (err) {
-    console.error("Sorry, there was an error: ", err);
-    res.render("error");
+    console.error('Sorry, there was an error: ', err);
+    res.render('error');
   }
 });
 
 // POST delete list item
-router.post("/:listId/:itemId/delete", async (req, res, next) => {
+router.post('/:listId/:itemId/delete', async (req, res, next) => {
   try {
     const listWithItemToDelete = await List.findByIdAndUpdate(
       req.params.listId,
@@ -86,17 +84,17 @@ router.post("/:listId/:itemId/delete", async (req, res, next) => {
     );
     // console.log(listWithItemToDelete);
     await Item.findByIdAndDelete(req.params.itemId);
-    await listWithItemToDelete.populate("items");
+    await listWithItemToDelete.populate('items');
     req.session.list = listWithItemToDelete;
-    res.redirect("/list");
+    res.redirect('/list');
   } catch (err) {
-    console.error("Sorry, there was an error: ", err);
-    res.render("error");
+    console.error('Sorry, there was an error: ', err);
+    res.render('error');
   }
 });
 
 // POST mark item as "done" or "undone"
-router.post("/:listId/:itemId/done", async (req, res, next) => {
+router.post('/:listId/:itemId/done', async (req, res, next) => {
   try {
     const itemToMark = await Item.findById(req.params.itemId);
     console.log(itemToMark);
@@ -104,17 +102,17 @@ router.post("/:listId/:itemId/done", async (req, res, next) => {
       await Item.findByIdAndUpdate(req.params.itemId, { done: true });
     } else await Item.findByIdAndUpdate(req.params.itemId, { done: false });
     const list = await List.findById(req.params.listId);
-    await list.populate("items");
+    await list.populate('items');
     req.session.list = list;
-    res.redirect("/list");
+    res.redirect('/list');
   } catch (err) {
-    console.error("Sorry, there was an error: ", err);
-    res.render("error");
+    console.error('Sorry, there was an error: ', err);
+    res.render('error');
   }
 });
 
 // POST edit list item
-router.post("/:listId/:itemId/edit", async (req, res, next) => {
+router.post('/:listId/:itemId/edit', async (req, res, next) => {
   try {
     const newNameForItem = req.sanitize(req.body.name);
     const newDeadlineForItem = req.sanitize(req.body.deadline);
@@ -130,14 +128,34 @@ router.post("/:listId/:itemId/edit", async (req, res, next) => {
       { new: true }
     );
 
-    await listWithItemToEdit.populate("items");
+    await listWithItemToEdit.populate('items');
     req.session.list = listWithItemToEdit;
-    // console.log('itemID: ', req.params.itemId);
-    // console.log('Req Ses List: ', req.session.list.items[0].id);
-    res.redirect("/list");
+    res.redirect('/list');
   } catch (err) {
-    console.error("Sorry, there was an error: ", err);
-    res.render("error");
+    console.error('Sorry, there was an error: ', err);
+    res.render('error');
+  }
+});
+
+// POST edit list name
+router.post('/list/edit/:listId', async (req, res, next) => {
+  try {
+    const newNameForList = req.sanitize(req.body.name);
+
+    const listToEditName = await List.findByIdAndUpdate(
+      req.params.listId,
+      {
+        name: newNameForList,
+      },
+      { new: true }
+    );
+
+    await listToEditName.populate('items');
+    req.session.list = listToEditName;
+    res.redirect('/list');
+  } catch (err) {
+    console.error('Sorry, there was an error: ', err);
+    res.render('error');
   }
 });
 

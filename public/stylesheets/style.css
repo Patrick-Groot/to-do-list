@@ -8,8 +8,13 @@
   width: fit-content;
 }
 
+/* not ideal yet */
+#list {
+  width: 500px;
+}
+
 .min-width {
-  min-width: 10rem;
+  min-width: 25%;
 }
 
 .to-do {
@@ -22,4 +27,12 @@
   background-color: transparent;
   padding: 10px 10px 10px 10px;
   border-radius: 10px;
+}
+
+.navbar-toggler-icon {
+  font-size: 0.5em;
+}
+
+.date {
+  white-space: nowrap;
 }
