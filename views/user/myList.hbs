@@ -135,18 +135,19 @@
                   </div>
                 </form>
               </div>
-              <td><p class='mt-2 date'>{{deadline}}</p></td>
-              <td>
-                <div class='d-flex pt-1'>
-                  <form class='m-0 mt-2 me-2' action='/{{../list._id}}/{{_id}}/done' method='POST'>
-                    <button class='btn btn-link p-0' type='submit'><i class='bi bi-check-square text-success heading'></i></button>
-                  </form>
-                  <form class='m-0 mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
-                    <button class='btn btn-link p-0' type='submit'><i class='bi bi-x-square text-danger'></i></button>
-                  </form>
-                </div>
-              </td>
             </td>
+            <td><p class='mt-2 date'>{{deadline}}</p></td>
+            <td>
+              <div class='d-flex pt-1'>
+                <form class='m-0 mt-2 me-2' action='/{{../list._id}}/{{_id}}/done' method='POST'>
+                  <button class='btn btn-link p-0' type='submit'><i class='bi bi-check-square text-success heading'></i></button>
+                </form>
+                <form class='m-0 mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
+                  <button class='btn btn-link p-0' type='submit'><i class='bi bi-x-square text-danger'></i></button>
+                </form>
+              </div>
+            </td>
+
           </tr>
         {{/if}}
       {{/each}}
