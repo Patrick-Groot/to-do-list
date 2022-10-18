@@ -1,4 +1,5 @@
 // middleware/route-guard.js
+const User = require('../models/User.model');
 
 // checks if the user is logged in when trying to access a specific page
 const isLoggedIn = (req, res, next) => {
@@ -17,7 +18,17 @@ const isLoggedOut = (req, res, next) => {
   next();
 };
 
+const isDarkmode = async (req, res, next) => {
+  if (req.isAuthenticated()) {
+    const user = await User.findById(req.session.passport.user.id);
+    if (!user.darkmode) req.darkmode = false;
+    if (user.darkmode) req.darkmode = true;
+  }
+  next();
+};
+
 module.exports = {
   isLoggedIn,
   isLoggedOut,
+  isDarkmode,
 };

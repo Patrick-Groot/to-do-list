@@ -7,6 +7,8 @@ const Item = require('../../models/Item.model');
 // JS "Window location" to hide params
 // req.session.whatever = data + redirect
 
+const { isDarkmode } = require('../../middleware/route-guard.js');
+
 // POST got to list
 router.post('/:id', async (req, res, next) => {
   try {
@@ -23,7 +25,8 @@ router.post('/:id', async (req, res, next) => {
 });
 
 // GET go to list
-router.get('/list', async (req, res, next) => {
+router.get('/list', isDarkmode, async (req, res, next) => {
+  const darkmode = req.darkmode;
   try {
     //console.log('GET SESSION----------->', req.session);
     sortedList = JSON.parse(JSON.stringify(req.session.list));
@@ -36,7 +39,7 @@ router.get('/list', async (req, res, next) => {
         item.deadlinePassed = true;
       }
     });
-    res.render('user/myList', { list: sortedList });
+    res.render('user/myList', { list: sortedList, darkmode });
   } catch (err) {
     console.error('Sorry, there was an error: ', err);
     res.render('error');

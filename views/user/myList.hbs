@@ -29,7 +29,7 @@
       {{#each list.items}}
         {{#unless done}}
           <tr>
-            <td class="w-100">
+            <td class='w-100'>
               <div class='btn-group'>
                 {{#if deadlinePassed}}
                   <a
@@ -108,15 +108,25 @@
       {{#each list.items}}
         {{#if done}}
           <tr>
-            <td class="w-100">
+            <td class='w-100'>
               <div class='btn-group'>
-                <a
-                  class='nav-link fs-4 text text-break text-black'
-                  href='#'
-                  role='button'
-                  data-bs-toggle='dropdown'
-                  aria-expanded='false'
-                >{{name}}</a>
+                {{#if ../darkmode}}
+                  <a
+                    class='nav-link fs-4 text text-break text-light'
+                    href='#'
+                    role='button'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                  >{{name}}</a>
+                {{else}}
+                  <a
+                    class='nav-link fs-4 text text-break text-dark'
+                    href='#'
+                    role='button'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                  >{{name}}</a>
+                {{/if}}
                 <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
                   <div class='col-md-auto'>
                     <label for='name'>Edit Name:</label>
