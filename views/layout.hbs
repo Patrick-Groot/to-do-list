@@ -59,17 +59,17 @@
                 <a class="nav-link" href="/dashboard">Dashboard</a>
               </li>
               {{#if darkmode}}
-              <form class="nav-item" action="/lightmode" method="POST">              
+              <form action="/lightmode" method="POST">              
               <button
                 type="submit"
-                class="btn btn-outline-secondary ps-4 pe-4 mt-2"
+                class="btn nav-link ps-4 pe-4 mt-2"
               >Lightmode</button>
             </form>
               {{else}}
               <form class="nav-item" action="/darkmode" method="POST">              
               <button
                 type="submit"
-                class="btn btn-outline-secondary ps-4 pe-4 mt-2"
+                class="btn nav-link ps-4 pe-4 mt-2"
               >Darkmode</button>
             </form>
               {{/if}}
