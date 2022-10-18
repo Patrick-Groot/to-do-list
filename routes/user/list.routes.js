@@ -42,7 +42,7 @@ router.get("/list", async (req, res, next) => {
     if (!foundUser.settings.darkmode) {
       return res.render("user/myList", { list: sortedList });
     }
-    return res.render("user/myList", { list: sortedList, layout: "layout-darkmode" });
+    return res.render("user/myList", { list: sortedList });
   } catch (err) {
     console.error("Sorry, there was an error: ", err);
     res.render("error");

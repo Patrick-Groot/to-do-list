@@ -5,8 +5,8 @@ const Item = require("../../models/Item.model");
 
 // require auth middleware
 const { isLoggedIn } = require("../../middleware/route-guard.js");
-
-// GET Dashboard
+const { switchDarkmode } = require("../../public/js/switchDarkmode.js");
+  // GET Dashboard
 router.get("/dashboard", isLoggedIn, async function (req, res, next) {
   try {
     const foundUser = await User.findById(req.user.id);
@@ -16,7 +16,7 @@ router.get("/dashboard", isLoggedIn, async function (req, res, next) {
     if (!foundUser.settings.darkmode) {
       return res.render("user/dashboard", { foundUser });
     }
-    return res.render("user/dashboard", { foundUser, layout: "layout-darkmode" });
+    return res.render("user/dashboard", { foundUser });
   } catch (err) {
     console.error("Sorry, there was an error: ", err);
     res.render("error");
@@ -84,6 +84,7 @@ router.get("/darkmode", async (req, res, next) => {
     console.log("Test");
     console.log(req.session.passport.user.id)
     const currentUser = await User.findByIdAndUpdate(req.session.passport.user.id, { settings: {"darkmode": true}}) 
+    switchDarkmode();
     res.redirect("/dashboard");
   } catch (err) {
     console.error("Sorry, there was an error: ", err);
@@ -96,6 +97,7 @@ router.get("/lightmode", async (req, res, next) => {
     console.log("Test");
     console.log(req.session.passport.user.id)
     const currentUser = await User.findByIdAndUpdate(req.session.passport.user.id, { settings: {"darkmode": false}}) 
+    switchDarkmode();
     res.redirect("/dashboard");
   } catch (err) {
     console.error("Sorry, there was an error: ", err);

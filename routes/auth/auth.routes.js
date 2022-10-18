@@ -42,13 +42,14 @@ passport.use(
   )
 );
 
-passport.serializeUser(function (user, cb) {
+passport.serializeUser(function (user, cb) {  
   process.nextTick(function () {
-    cb(null, { id: user.id, username: user.username });
+    cb(null, { id: user.id, username: user.username, darkmode: user.settings.darkmode });
   });
 });
 
 passport.deserializeUser(function (user, cb) {
+  console.log("FROM SERIALIZE: ", user);
   process.nextTick(function () {
     return cb(null, user);
   });
