@@ -82,9 +82,12 @@ router.post("/:listId/delete", async (req, res, next) => {
 
 router.post("/darkmode", async (req, res, next) => {
   try {
-    console.log(req.session.passport.user.id)
+    const referrer = req.get('Referrer').split("/").slice(-1)[0]
+    console.log("REQQQ: ", referrer)
+    //console.log(referrer.split("/").slice(-1)[0])
+    //console.log("REQQQ: ", request.getHeader("Referer"))
     await User.findByIdAndUpdate(req.session.passport.user.id, { settings: {"darkmode": true}})     
-    res.redirect("/dashboard");
+    res.redirect(`/${referrer}`);
   } catch (err) {
     console.error("Sorry, there was an error: ", err);
     res.render("error");
@@ -93,9 +96,11 @@ router.post("/darkmode", async (req, res, next) => {
 
 router.post("/lightmode", async (req, res, next) => {
   try {
-    console.log(req.session.passport.user.id)
+    const referrer = req.get('Referrer').split("/").slice(-1)[0]
+    console.log("REQQQ: ", referrer);    
+    console.log(referrer.split("/").slice(-1)[0])
     await User.findByIdAndUpdate(req.session.passport.user.id, { settings: {"darkmode": false}})
-        res.redirect("/dashboard");    
+        res.redirect(`/${referrer}`);    
   } catch (err) {
     console.error("Sorry, there was an error: ", err);
     res.render("error");
