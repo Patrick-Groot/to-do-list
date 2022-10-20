@@ -19,10 +19,6 @@ const userSchema = new Schema(
       default: false,
     },
   },
-  {
-    // this second object adds extra properties: `createdAt` and `updatedAt` // ?
-    timestamps: true,
-  }
 );
 
 const User = mongoose.model('User', userSchema);

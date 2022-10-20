@@ -15,17 +15,6 @@ const passport = require('passport');
 // https://www.npmjs.com/package/hbs
 const hbs = require('hbs');
 
-// Returns 10/10/22
-hbs.registerHelper('toLocaleString', function (number) {
-  const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
-  return number.toLocaleString('en-us', options);
-});
-
-// Returns 2022-10-10
-// hbs.registerHelper('toLocaleString', function (number) {
-//   return number.toISOString().split('T')[0];
-// });
-
 const app = express();
 
 // use session here:

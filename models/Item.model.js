@@ -9,9 +9,6 @@ const itemSchema = new Schema(
     deadline: String,
     deadlinePassed: Boolean,
   },
-  {
-    timestamps: true, // ?
-  }
 );
 
 const Item = model('Item', itemSchema);

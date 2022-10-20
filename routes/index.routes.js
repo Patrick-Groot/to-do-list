@@ -1,4 +1,4 @@
-const { isDarkmode } = require('../middleware/route-guard');
+const { isDarkmode } = require('../middleware/middleware');
 
 const router = require('express').Router();
 
