@@ -4,7 +4,7 @@ const User = require('../../models/User.model');
 const Item = require('../../models/Item.model');
 
 // require auth middleware
-const { isLoggedIn, isDarkmode } = require('../../middleware/route-guard.js');
+const { isLoggedIn, isDarkmode } = require('../../middleware/middleware.js');
 
 // GET Dashboard
 router.get('/dashboard', isLoggedIn, isDarkmode, async function (req, res, next) {
@@ -78,7 +78,7 @@ router.post('/:listId/delete', async (req, res, next) => {
   }
 });
 
-// DARKMODE TESTING HERE
+// Toggles Darkmode
 router.post('/darkmode', async (req, res, next) => {
   try {
     const user = await User.findById(req.session.passport.user.id);

@@ -11,7 +11,7 @@ const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 
 // require auth middleware
-const { isLoggedIn, isLoggedOut } = require('../../middleware/route-guard.js');
+const { isLoggedIn, isLoggedOut } = require('../../middleware/middleware.js');
 
 // Passport stuff - should live somewhere else...
 // https://github.com/howardmann/authentication

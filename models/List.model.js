@@ -8,9 +8,6 @@ const listSchema = new Schema(
     },
     items: [{ type: Schema.Types.ObjectId, ref: 'Item' }],
   },
-  {
-    timestamps: true, //?
-  }
 );
 
 const List = model('List', listSchema);

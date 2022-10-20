@@ -1,4 +1,4 @@
-const { isDarkmode } = require('../middleware/route-guard.js');
+const { isDarkmode } = require('../middleware/middleware.js');
 
 module.exports = (app) => {
   app.use(isDarkmode, (req, res, next) => {

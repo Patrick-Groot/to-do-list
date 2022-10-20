@@ -2,12 +2,7 @@ const router = require("express").Router();
 const List = require("../../models/List.model");
 const User = require("../../models/User.model");
 const Item = require("../../models/Item.model");
-
-// Notes from Rico, maybe still useful
-// JS "Window location" to hide params
-// req.session.whatever = data + redirect
-
-const { isDarkmode } = require("../../middleware/route-guard.js");
+const { isDarkmode } = require("../../middleware/middleware.js");
 
 // POST got to list
 router.post("/:id", async (req, res, next) => {
@@ -88,7 +83,6 @@ router.post("/:listId/:itemId/delete", async (req, res, next) => {
       },
       { new: true }
     );
-    // console.log(listWithItemToDelete);
     await Item.findByIdAndDelete(req.params.itemId);
     await listWithItemToDelete.populate("items");
     req.session.list = listWithItemToDelete;
