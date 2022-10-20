@@ -2,22 +2,37 @@
   <div id='list' class='p-3 my-4 rounded-3 border shadow-lg d-flex flex-column align-items-center'>
 
     {{! List title from here... }}
-    <div class=''>
+    <div>
       <div class='btn-group'>
+      {{#if darkmode}}
         <a
+          class='display-5 text-center nav-link fs-1 text fw-semibold text-warning border-bottom px-2 my-5'
+          href='#'
+          role='button'
+          data-bs-toggle='dropdown'
+          aria-expanded='false'
+        >{{list.name}}</a>
+        <form class='row dropdown-menu bg-dark' id='editForm' action='/list/edit/{{list._id}}' method='POST'>
+      {{else}}
+      <a
           class='display-5 text-center nav-link fs-1 text fw-semibold border-bottom px-2 my-5'
           href='#'
           role='button'
           data-bs-toggle='dropdown'
           aria-expanded='false'
         >{{list.name}}</a>
-        {{! Not working yet because of missing route          V V V V V V V}}
         <form class='row dropdown-menu' id='editForm' action='/list/edit/{{list._id}}' method='POST'>
+      {{/if}}
           <div class='col-md-auto'>
             <input type='text' name='name' value='{{list.name}}' class='form-control form-control-sm mb-1' required />
           </div>
           <div class='col-md-auto'>
-            <button type='submit' class='btn btn-secondary btn-sm'>Save</button>
+      {{#if darkmode}}
+            <button type='submit' class='btn btn-outline-success btn-sm'>Save</button>
+      {{else}}
+            <button type='submit' class='btn btn-success btn-sm'>Save</button>
+      {{/if}}
+
           </div>
         </form>
       </div>
@@ -29,7 +44,7 @@
       {{#each list.items}}
         {{#unless done}}
           <tr>
-            <td class="w-100">
+            <td class='w-100'>
               <div class='btn-group'>
                 {{#if deadlinePassed}}
                   <a
@@ -48,8 +63,12 @@
                     aria-expanded='false'
                   >{{name}}</a>
                 {{/if}}
-
+  	          {{#if ../darkmode}}
+                <form class='row dropdown-menu bg-dark' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
+              {{else}}
                 <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
+              {{/if}}
+
                   <div class='col-md-auto'>
                   </div>
                   <div class='col-md-auto'>
@@ -61,8 +80,12 @@
                     <input type='date' name='deadline' value='{{deadline}}' class='form-control form-control-sm mb-1' />
                   </div>
                   <div class='col-md-auto'>
-                    <button type='submit' class='btn btn-secondary btn-sm'>Save changes</button>
-                  </div>
+                  {{#if ../darkmode}}
+                    <button type='submit' class='btn btn-outline-success btn-sm'>Save changes</button>
+                  {{else}}
+                    <button type='submit' class='btn btn-success btn-sm'>Save changes</button>
+                  {{/if}}
+
                 </form>
               </div>
             </td>
@@ -90,14 +113,14 @@
     {{#if list.items}}
       <button
         id='expandButton'
-        class='btn btn-secondary btn-sm align-self-end mb-3'
+        class='btn btn-outline-secondary btn-sm align-self-end mb-3'
         type='button'
         data-bs-toggle='collapse'
         data-bs-target='#collapseList'
         aria-expanded='false'
         aria-controls='collapseList'
       >
-        show done &darr;
+        Completed Tasks &darr;
       </button>
     {{else}}
       <h4 class='text-center'>You have no items yet :(</h4>
@@ -108,16 +131,27 @@
       {{#each list.items}}
         {{#if done}}
           <tr>
-            <td class="w-100">
+            <td class='w-100'>
               <div class='btn-group'>
-                <a
-                  class='nav-link fs-4 text text-break text-black'
-                  href='#'
-                  role='button'
-                  data-bs-toggle='dropdown'
-                  aria-expanded='false'
-                >{{name}}</a>
+                {{#if ../darkmode}}
+                  <a
+                    class='nav-link fs-4 text text-break text-light'
+                    href='#'
+                    role='button'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                  >{{name}}</a>
+                <form class='row dropdown-menu bg-dark' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
+                {{else}}
+                  <a
+                    class='nav-link fs-4 text text-break text-dark'
+                    href='#'
+                    role='button'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                  >{{name}}</a>
                 <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
+                {{/if}}
                   <div class='col-md-auto'>
                     <label for='name'>Edit Name:</label>
                   </div>
@@ -131,7 +165,11 @@
                     <input type='date' name='deadline' value='{{deadline}}' class='form-control form-control-sm mb-1' />
                   </div>
                   <div class='col-md-auto'>
-                    <button type='submit' class='btn btn-secondary btn-sm'>Save changes</button>
+                  {{#if ../darkmode}}
+                    <button type='submit' class='btn btn-outline-success btn-sm'>Save changes</button>
+                  {{else}}
+                    <button type='submit' class='btn btn-success btn-sm'>Save changes</button>
+                  {{/if}}
                   </div>
                 </form>
               </div>
@@ -159,7 +197,12 @@
         <input type='text' name='itemName' class='form-control' required />
         <input type='date' name='itemDeadline' class='form-control form-control-sm mb-1 mt-1' />
       </div>
-      <button type='submit' class='btn btn-secondary'>Save new item</button>
+        	    {{#if darkmode}}
+      <button type='submit' class='btn btn-outline-success'>Save new item</button>
+              {{else}}
+      <button type='submit' class='btn btn-success'>Save new item</button>
+              {{/if}}
+
     </form>
   </div>
 </div>
