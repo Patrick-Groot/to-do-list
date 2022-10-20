@@ -1,2 +1,11 @@
-<h1 class='text-danger'>Error!</h1>
-<h2 class='text-warning'>There was an error on the server! Check the console!</h2>
+{{#if darkmode}}
+  <div class='bg-dark'>
+    <h1 class='text-danger'>Error!</h1>
+    <h2 class='text-warning'>There was an error on the server! Check the console!</h2>
+  </div>
+{{else}}
+  <div>
+    <h1 class='text-danger'>Error!</h1>
+    <h2 class='text-warning'>There was an error on the server! Check the console!</h2>
+  </div>
+{{/if}}
