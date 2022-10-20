@@ -48,7 +48,7 @@
               <div class='btn-group'>
                 {{#if deadlinePassed}}
                   <a
-                    class='nav-link fs-4 text text-break text-danger'
+                    class='nav-link fs-4 text text-break text-danger mt-2'
                     href='#'
                     role='button'
                     data-bs-toggle='dropdown'
@@ -56,7 +56,7 @@
                   >{{name}}</a>
                 {{else}}
                   <a
-                    class='nav-link fs-4 text text-break text-success'
+                    class='nav-link fs-4 text text-break text-success mt-2'
                     href='#'
                     role='button'
                     data-bs-toggle='dropdown'
@@ -90,14 +90,18 @@
               </div>
             </td>
             {{#if deadlinePassed}}
-              <td><p class='mt-2 date text-danger'>{{deadline}}</p></td>
+              <td><p class='mt-3 date text-danger'>{{deadline}}</p></td>
             {{else}}
-              <td><p class='mt-2 date'>{{deadline}}</p></td>
+              {{#if ../darkmode}}
+                <td><p class='mt-3 date text-light'>{{deadline}}</p></td>
+                {{else}}
+                <td><p class='mt-3 date'>{{deadline}}</p></td>
+              {{/if}}              
             {{/if}}
             <td>
               <div class='d-flex pt-1'>
                 <form class='m-0 mt-2 me-3' action='/{{../list._id}}/{{_id}}/done' method='POST'>
-                  <button class='btn btn-link p-0' type='submit'><i class='bi bi-check-square text-success fs-5 text'></i></button>
+                  <button class='btn btn-link p-0' type='submit'><i class='bi bi-square text-success fs-5 text'></i></button>
                 </form>
                 <form class='m-0 mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
                   <button class='btn btn-link p-0' type='submit'><i class='bi bi-x-square text-danger fs-5 text'></i></button>
@@ -135,7 +139,7 @@
               <div class='btn-group'>
                 {{#if ../darkmode}}
                   <a
-                    class='nav-link fs-4 text text-break text-light'
+                    class='nav-link fs-4 text text-break text-light mt-2'
                     href='#'
                     role='button'
                     data-bs-toggle='dropdown'
@@ -144,7 +148,7 @@
                 <form class='row dropdown-menu bg-dark' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
                 {{else}}
                   <a
-                    class='nav-link fs-4 text text-break text-dark'
+                    class='nav-link fs-4 text text-break text-dark mt-2'
                     href='#'
                     role='button'
                     data-bs-toggle='dropdown'
@@ -174,10 +178,15 @@
                 </form>
               </div>
             </td>
-            <td><p class='mt-2 date'>{{deadline}}</p></td>
+              {{#if ../darkmode}}
+                <td><p class='mt-3 date text-light'>{{deadline}}</p></td>
+                {{else}}
+                <td><p class='mt-3 date'>{{deadline}}</p></td>
+              {{/if}}
+            
             <td>
               <div class='d-flex pt-1'>
-                <form class='m-0 mt-2 me-2' action='/{{../list._id}}/{{_id}}/done' method='POST'>
+                <form class='m-0 mt-2 me-3' action='/{{../list._id}}/{{_id}}/done' method='POST'>
                   <button class='btn btn-link p-0' type='submit'><i class='bi bi-check-square text-success fs-5 text'></i></button>
                 </form>
                 <form class='m-0 mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
