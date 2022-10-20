@@ -12,10 +12,10 @@ if (expandButton) {
   expandButton.addEventListener('click', () => {
     const expandButtonAria = expandButton.getAttribute('aria-expanded');
     if (expandButtonAria == 'true') {
-      expandButton.innerHTML = 'hide done &uarr;';
+      expandButton.innerHTML = '&#160; &uarr; &#160;';
       doneList.style.backgroundColor = 'rgb(225, 255, 228)';
     } else {
-      expandButton.innerHTML = 'show done &darr;';
+      expandButton.innerHTML = 'Completed Tasks &darr;';
       doneList.style.backgroundColor = 'transparent';
     }
   });

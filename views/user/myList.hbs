@@ -27,7 +27,12 @@
             <input type='text' name='name' value='{{list.name}}' class='form-control form-control-sm mb-1' required />
           </div>
           <div class='col-md-auto'>
-            <button type='submit' class='btn btn-secondary btn-sm'>Save</button>
+      {{#if darkmode}}
+            <button type='submit' class='btn btn-outline-success btn-sm'>Save</button>
+      {{else}}
+            <button type='submit' class='btn btn-success btn-sm'>Save</button>
+      {{/if}}
+
           </div>
         </form>
       </div>
@@ -115,7 +120,7 @@
         aria-expanded='false'
         aria-controls='collapseList'
       >
-        show done &darr;
+        Completed Tasks &darr;
       </button>
     {{else}}
       <h4 class='text-center'>You have no items yet :(</h4>
@@ -161,7 +166,7 @@
                   </div>
                   <div class='col-md-auto'>
                   {{#if ../darkmode}}
-                    <button type='submit' class='btn btn-success-outline btn-sm'>Save changes</button>
+                    <button type='submit' class='btn btn-outline-success btn-sm'>Save changes</button>
                   {{else}}
                     <button type='submit' class='btn btn-success btn-sm'>Save changes</button>
                   {{/if}}
@@ -192,7 +197,12 @@
         <input type='text' name='itemName' class='form-control' required />
         <input type='date' name='itemDeadline' class='form-control form-control-sm mb-1 mt-1' />
       </div>
-      <button type='submit' class='btn btn-secondary'>Save new item</button>
+        	    {{#if darkmode}}
+      <button type='submit' class='btn btn-outline-success'>Save new item</button>
+              {{else}}
+      <button type='submit' class='btn btn-success'>Save new item</button>
+              {{/if}}
+
     </form>
   </div>
 </div>
