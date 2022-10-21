@@ -21,6 +21,7 @@
             </td>
             <td class="pt-2">
               <div class='btn-group'>
+                {{#if ../../darkmode}}
                   <button
                   type='button'
                   class='btn btn-outline-secondary btn-sm dropdown-toggle mt-2'
@@ -30,9 +31,17 @@
                 >
                   Edit
                 </button>
-                {{#if ../../darkmode}}
                 <form class='row dropdown-menu bg-dark' id='editForm' action='/{{this.id}}/edit' method='POST'>
                 {{else}}
+                  <button
+                  type='button'
+                  class='btn btn-secondary btn-sm dropdown-toggle mt-2'
+                  data-bs-toggle='dropdown'
+                  aria-expanded='false'
+                  data-bs-auto-close='outside'
+                >
+                  Edit
+                </button>
                 <form class='row dropdown-menu' id='editForm' action='/{{this.id}}/edit' method='POST'>
                 {{/if}}
 
