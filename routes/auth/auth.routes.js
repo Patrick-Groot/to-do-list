@@ -20,7 +20,7 @@ passport.use(
   new LocalStrategy(
     {
       // Fields to accept
-      usernameField: 'username', // default is username, override to accept email
+      usernameField: 'username',
       passwordField: 'password',
       passReqToCallback: true, // allows us to access req in the call back
     },
@@ -89,7 +89,6 @@ router.get('/signup', isLoggedOut, (req, res, next) => {
 router.post('/signup', async (req, res, next) => {
   const username = req.sanitize(req.body.username);
   const password = req.sanitize(req.body.password);
-
   if (!username || !password) {
     res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email and password.' });
     return;
@@ -107,8 +106,6 @@ router.post('/signup', async (req, res, next) => {
     const salt = await bcryptjs.genSalt(saltRounds);
     const hashedPassword = await bcryptjs.hash(password, salt);
     const createdUser = await User.create({ username, passwordHash: hashedPassword });
-    console.log('new user:', createdUser);
-    // res.redirect('/login');
     req.login(createdUser, function (err) {
       if (err) {
         return next(err);

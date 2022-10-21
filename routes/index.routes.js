@@ -1,5 +1,4 @@
 const { isDarkmode } = require('../middleware/middleware');
-
 const router = require('express').Router();
 
 /* GET home page */

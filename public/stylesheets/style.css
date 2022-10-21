@@ -3,30 +3,8 @@
   border-radius: 10px 0 0 0;
 }
 
-.list,
-.list-container {
-  width: fit-content;
-}
-
-/* not ideal yet */
 #list {
   width: 100%;
-}
-
-.min-width {
-  min-width: 25%;
-}
-
-.to-do {
-  background-color: rgb(255, 243, 225);
-  padding: 0 10px 10px 10px;
-  border-radius: 10px;
-}
-
-#done {
-  background-color: transparent;
-  padding: 10px 10px 10px 10px;
-  border-radius: 10px;
 }
 
 .navbar-toggler-icon {
@@ -46,6 +24,7 @@
 @media (min-width: 480px) {
   #list {
     width: fit-content;
+    min-width: 400px;
     max-width: 500px;
   }
 }

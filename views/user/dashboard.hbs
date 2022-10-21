@@ -1,16 +1,16 @@
-<div class='container w-100 d-flex justify-content-start'>
+<div class='container w-100 d-flex justify-content-start mb-3'>
   <div id='list' class='p-3 mt-4 rounded-3 border shadow-lg d-flex flex-column align-items-center'>
     {{#with foundUser}}
       <h1 class='display-5 mt-3 mb-5 border-bottom d-inline-flex px-3'>Welcome {{username}}!</h1>
       {{#if lists}}
         <h3 class='mt-3'>Your lists:</h3>
       {{else}}
-        <h4 class='mt-3'>You have no lists yet :(</h4>
+        <h4 class='mt-3 text-warning'>You have no lists yet <i class="bi bi-emoji-smile-upside-down"></i></h4>
       {{/if}}
       <table class='table table-hover'>
         {{#each lists}}
           <tr>
-            <td class='min-width'>
+            <td class='w-100'>
               <form class='nav-item' action='/{{this.id}}' method='POST'>
                 {{#if ../../darkmode}}
                   <button type='submit' class='btn btn-outline-warning ps-4 pe-4 mt-2 text-break'>{{this.name}}</button>
@@ -57,7 +57,7 @@
                     <button type='submit' class='btn btn-success btn-sm'>Save changes</button>
                   {{/if}}
                 </div>
-                {{!-- {{! </form> }} --}}
+                </form>
               </div>
               <div class='col-md-auto'>
                 <td>
@@ -71,7 +71,8 @@
         {{/each}}
       </table>
     {{/with}}
-
+    
+    {{!-- Create new list here --}}
     <form class='mt-2' action='/newlist' method='POST'>
       <div class='mb-4'>
         <label for='listName' class='form-label'>Create new List</label>
@@ -82,7 +83,6 @@
       {{else}}
         <button type='submit' class='btn btn-success'>Save new list</button>
       {{/if}}
-
     </form>
 
   </div>

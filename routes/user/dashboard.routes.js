@@ -10,10 +10,7 @@ const { isLoggedIn, isDarkmode } = require('../../middleware/middleware.js');
 router.get('/dashboard', isLoggedIn, isDarkmode, async function (req, res, next) {
   try {
     const foundUser = await User.findById(req.user.id);
-    console.log('Found User Name: ', foundUser.username);
-
     const darkmode = req.darkmode;
-
     await foundUser.populate('lists');
     res.render('user/dashboard', { foundUser, darkmode });
   } catch (err) {
@@ -27,7 +24,6 @@ router.post('/newlist', async (req, res, next) => {
   try {
     const nameForNewList = req.sanitize(req.body.listName);
     const newList = await List.create({ name: nameForNewList });
-    console.log('New list: ', newList);
     await User.findByIdAndUpdate(
       req.user.id,
       {
@@ -66,7 +62,6 @@ router.post('/:listId/delete', async (req, res, next) => {
     const foundListToDelete = await List.findById(req.params.listId);
     if (foundListToDelete.items) {
       foundListToDelete.items.forEach(async (elem) => {
-        console.log(elem);
         await Item.findByIdAndDelete(elem);
       });
     }
@@ -82,7 +77,6 @@ router.post('/:listId/delete', async (req, res, next) => {
 router.post('/darkmode', async (req, res, next) => {
   try {
     const user = await User.findById(req.session.passport.user.id);
-
     if (user.darkmode) {
       await User.findByIdAndUpdate(user._id, { darkmode: false });
     } else if (!user.darkmode) {

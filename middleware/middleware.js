@@ -18,6 +18,7 @@ const isLoggedOut = (req, res, next) => {
   next();
 };
 
+// Checks if user has enables darkmode
 const isDarkmode = async (req, res, next) => {
   if (req.isAuthenticated()) {
     const user = await User.findById(req.session.passport.user.id);
