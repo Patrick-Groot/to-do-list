@@ -1,3 +1,11 @@
-<h1 class='text-danger'>404 Error</h1>
-<h2 class='text-warning'>This route does not exist on the app! Check if everything is ok! Check your routes to see what might have happened
-</h2>
+{{#if darkmode}}
+<div class='container w-100 d-flex justify-content-center bg-dark'>
+{{else}}
+<div class='container w-100 d-flex justify-content-center'>
+{{/if}}
+  <div class='p-3 mt-5 rounded-3 border shadow-lg d-flex flex-column align-items-center'>
+    <h1 class='text-danger'>404 Ups!</h1>
+    <h2 class='text-warning'>Nothing here!</h2>
+    <a class='btn btn-success px-4 w-auto' href='/dashboard'> Go back to your Dashboard</a>
+  </div>
+</div>

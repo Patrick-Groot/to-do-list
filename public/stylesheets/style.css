@@ -45,6 +45,7 @@
 
 @media (min-width: 480px) {
   #list {
-    width: 500px;
+    width: fit-content;
+    max-width: 500px;
   }
 }

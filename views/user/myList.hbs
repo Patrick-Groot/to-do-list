@@ -6,7 +6,7 @@
       <div class='btn-group'>
       {{#if darkmode}}
         <a
-          class='display-5 text-center nav-link fs-1 text fw-semibold text-warning border-bottom px-2 my-5'
+          class='display-5 text-center nav-link fs-1 text fw-semibold text-warning border-bottom px-2 my-5 text-break'
           href='#'
           role='button'
           data-bs-toggle='dropdown'
@@ -14,8 +14,8 @@
         >{{list.name}}</a>
         <form class='row dropdown-menu bg-dark' id='editForm' action='/list/edit/{{list._id}}' method='POST'>
       {{else}}
-      <a
-          class='display-5 text-center nav-link fs-1 text fw-semibold border-bottom px-2 my-5'
+        <a
+          class='display-5 text-center nav-link fs-1 text fw-semibold border-bottom px-2 my-5 text-break'
           href='#'
           role='button'
           data-bs-toggle='dropdown'
@@ -27,12 +27,11 @@
             <input type='text' name='name' value='{{list.name}}' class='form-control form-control-sm mb-1' required />
           </div>
           <div class='col-md-auto'>
-      {{#if darkmode}}
-            <button type='submit' class='btn btn-outline-success btn-sm'>Save</button>
-      {{else}}
-            <button type='submit' class='btn btn-success btn-sm'>Save</button>
-      {{/if}}
-
+            {{#if darkmode}}
+              <button type='submit' class='btn btn-outline-success btn-sm'>Save</button>
+            {{else}}
+              <button type='submit' class='btn btn-success btn-sm'>Save</button>
+            {{/if}}
           </div>
         </form>
       </div>
@@ -63,11 +62,11 @@
                     aria-expanded='false'
                   >{{name}}</a>
                 {{/if}}
-  	          {{#if ../darkmode}}
-                <form class='row dropdown-menu bg-dark' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
-              {{else}}
-                <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
-              {{/if}}
+                {{#if ../darkmode}}
+                  <form class='row dropdown-menu bg-dark' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
+                {{else}}
+                  <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
+                {{/if}}
 
                   <div class='col-md-auto'>
                   </div>

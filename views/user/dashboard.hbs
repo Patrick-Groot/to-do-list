@@ -13,54 +13,51 @@
             <td class='min-width'>
               <form class='nav-item' action='/{{this.id}}' method='POST'>
                 {{#if ../../darkmode}}
-                <button type='submit' class='btn btn-outline-warning ps-4 pe-4 mt-2'>{{this.name}}</button>
+                  <button type='submit' class='btn btn-outline-warning ps-4 pe-4 mt-2 text-break'>{{this.name}}</button>
                 {{else}}
-                <button type='submit' class='btn btn-outline-success ps-4 pe-4 mt-2'>{{this.name}}</button>
+                  <button type='submit' class='btn btn-outline-success ps-4 pe-4 mt-2 text-break'>{{this.name}}</button>
                 {{/if}}
               </form>
             </td>
-            <td class="pt-2">
+            <td class='pt-2'>
               <div class='btn-group'>
                 {{#if ../../darkmode}}
                   <button
-                  type='button'
-                  class='btn btn-outline-secondary btn-sm dropdown-toggle mt-2'
-                  data-bs-toggle='dropdown'
-                  aria-expanded='false'
-                  data-bs-auto-close='outside'
-                >
-                  Edit
-                </button>
-                <form class='row dropdown-menu bg-dark' id='editForm' action='/{{this.id}}/edit' method='POST'>
+                    type='button'
+                    class='btn btn-outline-secondary btn-sm dropdown-toggle mt-2'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                    data-bs-auto-close='outside'
+                  >
+                    Edit
+                  </button>
+                  <form class='row dropdown-menu bg-dark' id='editForm' action='/{{this.id}}/edit' method='POST'>
                 {{else}}
                   <button
-                  type='button'
-                  class='btn btn-secondary btn-sm dropdown-toggle mt-2'
-                  data-bs-toggle='dropdown'
-                  aria-expanded='false'
-                  data-bs-auto-close='outside'
-                >
-                  Edit
-                </button>
-                <form class='row dropdown-menu' id='editForm' action='/{{this.id}}/edit' method='POST'>
+                    type='button'
+                    class='btn btn-secondary btn-sm dropdown-toggle mt-2'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                    data-bs-auto-close='outside'
+                  >
+                    Edit
+                  </button>
+                  <form class='row dropdown-menu' id='editForm' action='/{{this.id}}/edit' method='POST'>
                 {{/if}}
-
-                  <div class='col-md-auto'>
-                    <label for='name'>Edit Name:</label>
-                  </div>
-                  <div class='col-md-auto'>
-                    <input type='text' name='name' value='{{this.name}}' class='form-control form-control-sm mb-1' required />
-                  </div>
-                  <div class='col-md-auto'>
-                {{#if ../../darkmode}}
+                <div class='col-md-auto'>
+                  <label for='name'>Edit Name:</label>
+                </div>
+                <div class='col-md-auto'>
+                  <input type='text' name='name' value='{{this.name}}' class='form-control form-control-sm mb-1' required />
+                </div>
+                <div class='col-md-auto'>
+                  {{#if ../../darkmode}}
                     <button type='submit' class='btn btn-outline-success btn-sm'>Save changes</button>
-                {{else}}
+                  {{else}}
                     <button type='submit' class='btn btn-success btn-sm'>Save changes</button>
-                {{/if}}
-
-                  </div>
-                </form>
-
+                  {{/if}}
+                </div>
+                {{!-- {{! </form> }} --}}
               </div>
               <div class='col-md-auto'>
                 <td>
@@ -81,9 +78,9 @@
         <input type='text' name='listName' class='form-control' required />
       </div>
       {{#if darkmode}}
-      <button type='submit' class='btn btn-outline-success'>Save new list</button>
+        <button type='submit' class='btn btn-outline-success'>Save new list</button>
       {{else}}
-      <button type='submit' class='btn btn-success'>Save new list</button>
+        <button type='submit' class='btn btn-success'>Save new list</button>
       {{/if}}
 
     </form>
