@@ -19,11 +19,11 @@
                 {{/if}}
               </form>
             </td>
-            <td>
+            <td class="pt-2">
               <div class='btn-group'>
                   <button
                   type='button'
-                  class='btn btn-secondary btn-sm dropdown-toggle mt-2'
+                  class='btn btn-outline-secondary btn-sm dropdown-toggle mt-2'
                   data-bs-toggle='dropdown'
                   aria-expanded='false'
                   data-bs-auto-close='outside'
@@ -43,7 +43,12 @@
                     <input type='text' name='name' value='{{this.name}}' class='form-control form-control-sm mb-1' required />
                   </div>
                   <div class='col-md-auto'>
+                {{#if ../../darkmode}}
+                    <button type='submit' class='btn btn-outline-success btn-sm'>Save changes</button>
+                {{else}}
                     <button type='submit' class='btn btn-success btn-sm'>Save changes</button>
+                {{/if}}
+
                   </div>
                 </form>
 
