@@ -73,7 +73,7 @@ router.post('/:listId/delete', async (req, res, next) => {
   }
 });
 
-// Toggles Darkmode
+// POST toggle darkmode
 router.post('/darkmode', async (req, res, next) => {
   try {
     const user = await User.findById(req.session.passport.user.id);

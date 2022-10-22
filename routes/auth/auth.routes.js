@@ -1,6 +1,5 @@
 const User = require('../../models/User.model');
 
-const express = require('express');
 const router = require('express').Router();
 const mongoose = require('mongoose');
 
@@ -13,7 +12,6 @@ const saltRounds = 10;
 // require auth middleware
 const { isLoggedIn, isLoggedOut } = require('../../middleware/middleware.js');
 
-// Passport stuff - should live somewhere else...
 // https://github.com/howardmann/authentication
 passport.use(
   'local-login',

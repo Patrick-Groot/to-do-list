@@ -1,21 +1,7 @@
 const router = require('express').Router();
 const List = require('../../models/List.model');
-const User = require('../../models/User.model');
 const Item = require('../../models/Item.model');
 const { isDarkmode } = require('../../middleware/middleware.js');
-
-// POST got to list
-router.post('/:id', async (req, res, next) => {
-  try {
-    const list = await List.findById(req.params.id);
-    await list.populate('items');
-    req.session.list = list;
-    res.redirect('/list');
-  } catch (err) {
-    console.error('Sorry, there was an error: ', err);
-    res.render('error');
-  }
-});
 
 // GET go to list
 router.get('/list', isDarkmode, async (req, res, next) => {
@@ -36,6 +22,19 @@ router.get('/list', isDarkmode, async (req, res, next) => {
       }
     });
     res.render('user/myList', { list: sortedList, darkmode });
+  } catch (err) {
+    console.error('Sorry, there was an error: ', err);
+    res.render('error');
+  }
+});
+
+// POST go to list
+router.post('/:id', async (req, res, next) => {
+  try {
+    const list = await List.findById(req.params.id);
+    await list.populate('items');
+    req.session.list = list;
+    res.redirect('/list');
   } catch (err) {
     console.error('Sorry, there was an error: ', err);
     res.render('error');

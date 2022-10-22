@@ -9,12 +9,6 @@ require('./db');
 // https://www.npmjs.com/package/express
 const express = require('express');
 
-const passport = require('passport');
-
-// Handles the handlebars
-// https://www.npmjs.com/package/hbs
-const hbs = require('hbs');
-
 const app = express();
 
 // use session here:
