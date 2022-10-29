@@ -1,0 +1,49 @@
+<div class='container my-5'>
+  <div class='row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg'>
+    <div class='container col-xl-10 col-xxl-8 px-4 py-5'>
+      <div class='row align-items-center g-lg-5 py-5'>
+        <div class='col-lg-7 text-center text-lg-start'>
+          <h1 class='display-4 fw-bold lh-1 mb-3'>Organize your goals to achieve your dreams.</h1>
+          <p class='lead mt-4'>
+            “The elevator to success is out of order. You’ll have to use the stairs, one step at a time.” — Joe Girard
+          </p>
+        </div>
+
+        <div class='mx-auto col-lg-5'>
+          <form class='p-3 p-md-5 border rounded-3 bg-light' action='/signup' method='POST'>
+            <div>
+              <h1 class='display-5 text-center mb-4'>Sign up</h1>
+            </div>
+            <div class='form-floating mb-3'>
+              <input type='text' name='username' class='form-control' id='floatingInput' placeholder='Username' />
+              <label for='floatingInput'>Username</label>
+            </div>
+            <div class='form-floating mb-3'>
+              <input type='password' class='form-control' name='password' id='floatingPassword' placeholder='Password' />
+              <label for='password'>Password</label>
+            </div>
+
+            <button class='w-100 btn btn-lg btn-secondary' type='submit'>Sign up</button>
+            <hr class='my-4' />
+            {{#if errorMessage}}
+              <div class='card bg-secondary w-100'>
+                <div class='card-body'>
+                  <h5 class='card-title text-warning'>{{errorHeader}}</h5>
+                  <h6 class='card-subtitle mb-2 text-warning'>{{errorMessage}}</h6>
+                </div>
+              </div>
+            {{/if}}
+            <small class='text-muted'>By clicking Sign up, you agree to organize your goals and that cats are the best.</small>
+            <hr class='my-4' />
+            <div class='d-flex justify-content-center'>
+              <small class='text-muted text-center'>Already signed up?
+                <a href='/login'>Log in</a>
+                here
+              </small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

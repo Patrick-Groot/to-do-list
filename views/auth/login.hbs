@@ -1,0 +1,45 @@
+<div class='container my-5'>
+  <div class='row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg'>
+    <div class='container col-xl-10 col-xxl-8 px-4 py-5'>
+      <div class='row align-items-center g-lg-5 py-5'>
+        <div class='col-lg-7 text-center text-lg-start'>
+          <h1 class='display-4 fw-bold lh-1 mb-3'>Organize your goals to achieve your dreams.</h1>
+          <p class='lead mt-4'>
+            “People often say that motivation doesn’t last. Well, neither does bathing – that’s why we recommend it daily.” — Zig Ziglar
+          </p>
+        </div>
+
+        <div class='col-md-10 mx-auto col-lg-5'>
+          <form class='p-3 p-md-5 border rounded-3 bg-light' action='/login' method='POST'>
+            <div>
+              <h1 class='display-5 text-center mb-4'>Login</h1>
+            </div>
+            <div class='form-floating mb-3'>
+              <input type='text' for='username' name='username' class='form-control' id='floatingInput' placeholder='Username' required />
+              <label for='floatingInput'>Username</label>
+            </div>
+            <div class='form-floating mb-3'>
+              <input type='password' for='password' name='password' class='form-control' id='floatingPassword' placeholder='Password' required />
+              <label for='password'>Password</label>
+            </div>
+
+            <button class='w-100 btn btn-lg btn-secondary' type='submit'>Login</button>
+            <hr class='my-4' />
+            {{#if message}}
+              <div class='card bg-secondary'>
+                <div class='card-body'>
+                  <h5 class='card-title text-warning'>{{errorHeader}}</h5>
+                  <h6 class='card-subtitle text-warning'>{{message}}</h6>
+                </div>
+              </div>
+              <hr class='my-4' />
+            {{/if}}
+            <div class='d-flex justify-content-center'>
+              <small class='text-muted'>Not a user yet? <a href='/signup'>Sign up</a> here </small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

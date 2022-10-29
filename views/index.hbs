@@ -1,0 +1,33 @@
+<main>
+  <div class='container my-5'>
+    <div class='row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg'>
+      <div class='col-lg-7 p-3 p-lg-5 pt-lg-3'>
+        {{#if darkmode}}
+          <h1 class='display-4 fw-bold lh-1'>There is only one way to get things done: <span class='text-warning'>Do them!</span> </h1>
+        {{else}}
+          <h1 class='display-4 fw-bold lh-1'>There is only one way to get things done: <span class='text-success'>Do them!</span> </h1>
+        {{/if}}
+
+        <p class='lead'>
+          Hm, now that I think about it, maybe there is more than one way to get things done. I guess you could also pay someone to do the things you
+          want done... Anyway, a nice to-do list is the best way to start.
+        </p>
+        <div class='d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3'>
+          {{#if user}}
+            {{#if darkmode}}
+              <a class='btn btn-outline-warning px-4' href='/dashboard'>Dashboard</a>
+            {{else}}
+              <a class='btn btn-outline-secondary px-4' href='/dashboard'>Dashboard</a>
+            {{/if}}
+          {{else}}
+            <a class='btn btn-outline-secondary px-4' href='/login'>Login</a>
+            <a class='btn btn-outline-secondary px-4' href='/signup'>Sign up</a>
+          {{/if}}
+        </div>
+      </div>
+      <div class='col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg to-do-list-img-container'>
+        <img class='to-do-list-img' src='../images/to-do-list.jpg' alt='' width='720' />
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,210 @@
+<div class='container w-100 d-flex justify-content-start mb-3'>
+  <div id='list' class='p-3 mt-4 rounded-3 border shadow-lg d-flex flex-column align-items-center'>
+
+    {{! List title from here... }}
+    <div>
+      <div class='btn-group'>
+      {{#if darkmode}}
+        <a
+          class='display-5 text-center nav-link fs-1 text fw-semibold text-warning border-bottom px-2 my-5 text-break'
+          href='#'
+          role='button'
+          data-bs-toggle='dropdown'
+          aria-expanded='false'
+        >{{list.name}}</a>
+        <form class='row dropdown-menu bg-dark' id='editForm' action='/list/edit/{{list._id}}' method='POST'>
+      {{else}}
+        <a
+          class='display-5 text-center nav-link fs-1 text fw-semibold border-bottom px-2 my-5 text-break'
+          href='#'
+          role='button'
+          data-bs-toggle='dropdown'
+          aria-expanded='false'
+        >{{list.name}}</a>
+        <form class='row dropdown-menu' id='editForm' action='/list/edit/{{list._id}}' method='POST'>
+      {{/if}}
+          <div class='col-md-auto'>
+            <input type='text' name='name' value='{{list.name}}' class='form-control form-control-sm mb-1' required />
+          </div>
+          <div class='col-md-auto'>
+            {{#if darkmode}}
+              <button type='submit' class='btn btn-outline-success btn-sm'>Save</button>
+            {{else}}
+              <button type='submit' class='btn btn-success btn-sm'>Save</button>
+            {{/if}}
+          </div>
+        </form>
+      </div>
+    </div>
+    {{! ...to here }}
+
+    {{! Main list }}
+    <table class='table table-hover'>
+      {{#each list.items}}
+        {{#unless done}}
+          <tr>
+            <td class='w-100'>
+              <div class='btn-group'>
+                {{#if deadlinePassed}}
+                  <a
+                    class='nav-link fs-4 text text-break text-danger mt-2'
+                    href='#'
+                    role='button'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                  >{{name}}</a>
+                {{else}}
+                  <a
+                    class='nav-link fs-4 text text-break text-success mt-2'
+                    href='#'
+                    role='button'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                  >{{name}}</a>
+                {{/if}}
+                {{#if ../darkmode}}
+                  <form class='row dropdown-menu bg-dark' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
+                {{else}}
+                  <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
+                {{/if}}
+                  <div class='col-md-auto'>
+                  </div>
+                  <div class='col-md-auto'>
+                    <input type='text' name='name' value='{{name}}' class='form-control form-control-sm mb-1' required />
+                  </div>
+                  <div class='col-md-auto'>
+                  </div>
+                  <div class='col-md-auto'>
+                    <input type='date' name='deadline' value='{{deadline}}' class='form-control form-control-sm mb-1' />
+                  </div>
+                  <div class='col-md-auto'>
+                  {{#if ../darkmode}}
+                    <button type='submit' class='btn btn-outline-success btn-sm'>Save changes</button>
+                  {{else}}
+                    <button type='submit' class='btn btn-success btn-sm'>Save changes</button>
+                  {{/if}}
+                </form>
+              </div>
+            </td>
+            {{#if deadlinePassed}}
+              <td><p class='mt-3 date text-danger'>{{deadline}}</p></td>
+            {{else}}
+              {{#if ../darkmode}}
+                <td><p class='mt-3 date text-light'>{{deadline}}</p></td>
+                {{else}}
+                <td><p class='mt-3 date'>{{deadline}}</p></td>
+              {{/if}}              
+            {{/if}}
+            <td>
+              <div class='d-flex pt-1'>
+                <form class='m-0 mt-2 me-3' action='/{{../list._id}}/{{_id}}/done' method='POST'>
+                  <button class='btn btn-link p-0' type='submit'><i class='bi bi-square text-success fs-5 text'></i></button>
+                </form>
+                <form class='m-0 mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
+                  <button class='btn btn-link p-0' type='submit'><i class='bi bi-x-square text-danger fs-5 text'></i></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        {{/unless}}
+      {{/each}}
+    </table>
+
+    {{! Show/Hide Button }}
+    {{#if list.items}}
+      <button
+        id='expandButton'
+        class='btn btn-outline-secondary btn-sm align-self-end mb-3'
+        type='button'
+        data-bs-toggle='collapse'
+        data-bs-target='#collapseList'
+        aria-expanded='false'
+        aria-controls='collapseList'
+      >
+        Completed Tasks &darr;
+      </button>
+    {{else}}
+      <h4 class='text-center text-warning'>You have no items yet <i class="bi bi-emoji-smile-upside-down"></i></h4>
+    {{/if}}
+
+    {{! Done list }}
+    <table class='table table-hover col-md-10 mx-auto col-lg-5 collapse' id='collapseList'>
+      {{#each list.items}}
+        {{#if done}}
+          <tr>
+            <td class='w-100'>
+              <div class='btn-group'>
+                {{#if ../darkmode}}
+                  <a
+                    class='nav-link fs-4 text text-break text-light mt-2'
+                    href='#'
+                    role='button'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                  >{{name}}</a>
+                <form class='row dropdown-menu bg-dark' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
+                {{else}}
+                  <a
+                    class='nav-link fs-4 text text-break text-dark mt-2'
+                    href='#'
+                    role='button'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                  >{{name}}</a>
+                <form class='row dropdown-menu' id='editForm' action='/{{../list._id}}/{{_id}}/edit' method='POST'>
+                {{/if}}
+                  <div class='col-md-auto'>
+                    <label for='name'>Edit Name:</label>
+                  </div>
+                  <div class='col-md-auto'>
+                    <input type='text' name='name' value='{{name}}' class='form-control form-control-sm mb-1' required />
+                  </div>
+                  <div class='col-md-auto'>
+                    <label for='name'>Edit Deadline:</label>
+                  </div>
+                  <div class='col-md-auto'>
+                    <input type='date' name='deadline' value='{{deadline}}' class='form-control form-control-sm mb-1' />
+                  </div>
+                  <div class='col-md-auto'>
+                  {{#if ../darkmode}}
+                    <button type='submit' class='btn btn-outline-success btn-sm'>Save changes</button>
+                  {{else}}
+                    <button type='submit' class='btn btn-success btn-sm'>Save changes</button>
+                  {{/if}}
+                  </div>
+                </form>
+              </div>
+            </td>
+              {{#if ../darkmode}}
+                <td><p class='mt-3 date text-light'>{{deadline}}</p></td>
+                {{else}}
+                <td><p class='mt-3 date'>{{deadline}}</p></td>
+              {{/if}}
+            <td>
+              <div  class='d-flex pt-1'>
+                <form class='m-0 mt-2 me-3' action='/{{../list._id}}/{{_id}}/done' method='POST'>
+                  <button class='btn btn-link p-0' type='submit'><i class='bi bi-check-square text-success fs-5 text'></i></button>
+                </form>
+                <form class='m-0 mt-2' action='/{{../list._id}}/{{_id}}/delete' method='POST'>
+                  <button class='btn btn-link p-0' type='submit'><i class='bi bi-x-square text-danger fs-5 text'></i></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        {{/if}}
+      {{/each}}
+    </table>
+    <form class='mt-2 mx-3' action='/{{list._id}}/newitem' method='POST'>
+      <div class='mb-4'>
+        <label for='itemName' class='form-label text-secondary'>Create new item</label>
+        <input type='text' name='itemName' class='form-control' required />
+        <input type='date' name='itemDeadline' class='form-control form-control-sm mb-1 mt-1' />
+      </div>
+      {{#if darkmode}}
+        <button type='submit' class='btn btn-outline-success'>Save new item</button>
+      {{else}}
+        <button type='submit' class='btn btn-success'>Save new item</button>
+      {{/if}}
+    </form>
+  </div>
+</div>

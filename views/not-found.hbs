@@ -1,0 +1,17 @@
+{{#if darkmode}}
+  <div class='container w-100 d-flex justify-content-center bg-dark'>
+    <div class='p-3 mt-5 rounded-3 border shadow-lg d-flex flex-column align-items-center'>
+      <h1 class='text-danger'>404 - Ups!</h1>
+      <h2 class='text-warning mb-5'>Nothing here!</h2>
+      <a class='btn btn-outline-success px-4 w-auto' href='/dashboard'>Go back to your Dashboard</a>
+    </div>
+  </div>
+{{else}}
+  <div class='container w-100 d-flex justify-content-center'>
+    <div class='p-3 mt-5 rounded-3 border shadow-lg d-flex flex-column align-items-center'>
+      <h1 class='text-danger'>404 - Ups!</h1>
+      <h2 class='text-warning mb-5'>Nothing here!</h2>
+      <a class='btn btn-success px-4 w-auto' href='/dashboard'>Go back to your Dashboard</a>
+    </div>
+  </div>
+{{/if}}

@@ -1,0 +1,89 @@
+<div class='container w-100 d-flex justify-content-start mb-3'>
+  <div id='list' class='p-3 mt-4 rounded-3 border shadow-lg d-flex flex-column align-items-center'>
+    {{#with foundUser}}
+      <h1 class='display-5 mt-3 mb-5 border-bottom d-inline-flex px-3'>Welcome {{username}}!</h1>
+      {{#if lists}}
+        <h3 class='mt-3'>Your lists:</h3>
+      {{else}}
+        <h4 class='mt-3 text-warning'>You have no lists yet <i class="bi bi-emoji-smile-upside-down"></i></h4>
+      {{/if}}
+      <table class='table table-hover'>
+        {{#each lists}}
+          <tr>
+            <td class='w-100'>
+              <form class='nav-item' action='/{{this.id}}' method='POST'>
+                {{#if ../../darkmode}}
+                  <button type='submit' class='btn btn-outline-warning ps-4 pe-4 mt-2 text-break'>{{this.name}}</button>
+                {{else}}
+                  <button type='submit' class='btn btn-outline-success ps-4 pe-4 mt-2 text-break'>{{this.name}}</button>
+                {{/if}}
+              </form>
+            </td>
+            <td class='pt-2'>
+              <div class='btn-group'>
+                {{#if ../../darkmode}}
+                  <button
+                    type='button'
+                    class='btn btn-outline-secondary btn-sm dropdown-toggle mt-2'
+                          data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                    data-bs-auto-close='outside'
+                  >
+                    Edit
+                  </button>
+                  <form class='row dropdown-menu bg-dark' id='editForm' action='/{{this.id}}/edit' method='POST'>
+                {{else}}
+                  <button
+                    type='button'
+                    class='btn btn-secondary btn-sm dropdown-toggle mt-2'
+                    data-bs-toggle='dropdown'
+                    aria-expanded='false'
+                    data-bs-auto-close='outside'
+                  >
+                    Edit
+                  </button>
+                  <form class='row dropdown-menu' id='editForm' action='/{{this.id}}/edit' method='POST'>
+                {{/if}}
+                <div class='col-md-auto'>
+                  <label for='name'>Edit Name:</label>
+                </div>
+                <div class='col-md-auto'>
+                  <input type='text' name='name' value='{{this.name}}' class='form-control form-control-sm mb-1' required />
+                </div>
+                <div class='col-md-auto'>
+                  {{#if ../../darkmode}}
+                    <button type='submit' class='btn btn-outline-success btn-sm'>Save changes</button>
+                  {{else}}
+                    <button type='submit' class='btn btn-success btn-sm'>Save changes</button>
+                  {{/if}}
+                </div>
+                </form>
+              </div>
+              <div class='col-md-auto'>
+                <td>
+                  <form class='w-50 mt-2' action='/{{this.id}}/delete' method='POST'>
+                    <button class='btn btn-link' type='submit'><i class='bi bi-x-square fs-5 text text-danger'></i></button>
+                  </form>
+                </td>
+              </div>
+            </td>
+          </tr>
+        {{/each}}
+      </table>
+    {{/with}}
+    
+    {{!-- Create new list here --}}
+    <form class='mt-2' action='/newlist' method='POST'>
+      <div class='mb-4'>
+        <label for='listName' class='form-label'>Create new List</label>
+        <input type='text' name='listName' class='form-control' required />
+      </div>
+      {{#if darkmode}}
+        <button type='submit' class='btn btn-outline-success'>Save new list</button>
+      {{else}}
+        <button type='submit' class='btn btn-success'>Save new list</button>
+      {{/if}}
+    </form>
+
+  </div>
+</div>
